@@ -1,0 +1,14 @@
+{
+	"editor.fontSize": 16,
+	"editor.formatOnSave": true,
+	"php.validate.executablePath": "/usr/bin/php",
+	"composer.executablePath": "/usr/local/bin/composer",
+	"[php]": {
+		"editor.formatOnSave": true,
+		"editor.defaultFormatter": "junstyle.php-cs-fixer",
+	},
+	"[json]": {
+		"editor.formatOnSave": true,
+		"editor.defaultFormatter": "esbenp.prettier-vscode",
+	}
+}
