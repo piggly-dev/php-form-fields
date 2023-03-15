@@ -2,7 +2,7 @@
 
 namespace Pgly\FormFields\Fields;
 
-use Pgly\FormFields\Options\HTMLFieldOptions;
+use Pgly\FormFields\Options\HtmlFieldOptions;
 
 /**
  * HTML textarea with no sanitizer input field.
@@ -23,10 +23,10 @@ class RawTextAreaInputField extends AbstractHtmlInputField
 	 * Create a new field.
 	 *
 	 * @since 1.0.0
-	 * @param HTMLFieldOptions $options
+	 * @param HtmlFieldOptions $options Field options.
 	 * @return void
 	 */
-	public function __construct(HTMLFieldOptions $options = null)
+	public function __construct(HtmlFieldOptions $options = null)
 	{
 		parent::__construct($options);
 		$this->_options->changeType('textarea');
@@ -35,7 +35,7 @@ class RawTextAreaInputField extends AbstractHtmlInputField
 	/**
 	 * Render to HTML with value.
 	 *
-	 * @param mixed $value
+	 * @param mixed $value Field value.
 	 * @since 1.0.0
 	 * @return string
 	 */

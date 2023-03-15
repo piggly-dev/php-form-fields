@@ -6,7 +6,7 @@
 	],
 	"settings": {
 		"php-cs-fixer.onsave": true,
-		"php-cs-fixer.executablePath": "/home/piggly/.config/composer/vendor/bin/php-cs-fixer",
+		"php-cs-fixer.executablePath": "/usr/bin/php-cs-fixer",
 		"php-cs-fixer.rules": "@PSR12",
 		"php-cs-fixer.config": ".php-cs-fixer.php",
 		"php-cs-fixer.allowRisky": false,
@@ -16,6 +16,9 @@
 		"php-cs-fixer.autoFixBySemicolon": false,
 		"php-cs-fixer.formatHtml": true,
 		"php-cs-fixer.documentFormattingProvider": true,
+		"phpcs.enable": true,
+		"phpcs.executablePath": "/usr/bin/phpcs",
+		"phpcs.standard": "./phpcs.xml",
 		"php.validate.enable": true,
 		"php.validate.executablePath": "/usr/bin/php",
 		"php.suggest.basic": false,

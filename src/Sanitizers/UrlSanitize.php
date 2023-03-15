@@ -22,7 +22,7 @@ class UrlSanitize implements SanitizableCallbackInterface
 	/**
 	 * Sanitize the value to url.
 	 *
-	 * @param mixed $value
+	 * @param mixed $value Value to sanitize.
 	 * @since 1.0.0
 	 * @return string
 	 */

@@ -23,7 +23,7 @@ class TimeSanitize implements SanitizableCallbackInterface
 	/**
 	 * Sanitize the value to time.
 	 *
-	 * @param mixed $value
+	 * @param mixed $value Value to sanitize.
 	 * @since 1.0.0
 	 * @return string
 	 */

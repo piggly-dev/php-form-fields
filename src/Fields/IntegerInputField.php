@@ -2,7 +2,7 @@
 
 namespace Pgly\FormFields\Fields;
 
-use Pgly\FormFields\Options\HTMLFieldOptions;
+use Pgly\FormFields\Options\HtmlFieldOptions;
 use Pgly\FormFields\Sanitizers\IntegerSanitize;
 
 /**
@@ -24,10 +24,10 @@ class IntegerInputField extends TextInputField
 	 * Create a new field.
 	 *
 	 * @since 1.0.0
-	 * @param HTMLFieldOptions $options
+	 * @param HtmlFieldOptions $options Field options.
 	 * @return void
 	 */
-	public function __construct(HTMLFieldOptions $options = null)
+	public function __construct(HtmlFieldOptions $options = null)
 	{
 		parent::__construct($options);
 		$this->_options->changeType('number');

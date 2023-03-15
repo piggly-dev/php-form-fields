@@ -22,7 +22,7 @@ interface SanitizableCallbackInterface
 	 * Must return value.
 	 *
 	 * @since 1.0.0
-	 * @param mixed $value
+	 * @param mixed $value Value to sanitize.
 	 * @return mixed
 	 */
 	public function sanitize($value);

@@ -22,7 +22,7 @@ class HtmlSanitize implements SanitizableCallbackInterface
 	/**
 	 * Sanitize the value to HTML.
 	 *
-	 * @param mixed $value
+	 * @param mixed $value Value to sanitize.
 	 * @since 1.0.0
 	 * @return string
 	 */

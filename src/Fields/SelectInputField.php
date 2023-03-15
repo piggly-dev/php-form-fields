@@ -2,7 +2,7 @@
 
 namespace Pgly\FormFields\Fields;
 
-use Pgly\FormFields\Options\HTMLFieldOptions;
+use Pgly\FormFields\Options\HtmlFieldOptions;
 use Pgly\FormFields\Sanitizers\HtmlSanitize;
 
 /**
@@ -24,10 +24,10 @@ class SelectInputField extends AbstractHtmlInputField
 	 * Create a new field.
 	 *
 	 * @since 1.0.0
-	 * @param HTMLFieldOptions $options
+	 * @param HtmlFieldOptions $options Field options.
 	 * @return void
 	 */
-	public function __construct(HTMLFieldOptions $options = null)
+	public function __construct(HtmlFieldOptions $options = null)
 	{
 		parent::__construct($options);
 		$this->_options->changeType('select');
@@ -37,8 +37,8 @@ class SelectInputField extends AbstractHtmlInputField
 	/**
 	 * Render to HTML with value.
 	 *
-	 * @param mixed $value
-	 * @param array $options
+	 * @param mixed $value Field value.
+	 * @param array $options Options to render. Eg.: [ ['value'=> 1, 'label'=> 'Option 1'], ['value'=> 2, 'label'=> 'Option 2']].
 	 * @since 1.0.0
 	 * @return string
 	 */
@@ -65,7 +65,12 @@ class SelectInputField extends AbstractHtmlInputField
 		}
 
 		foreach ($options as $option) {
-			$selected = $option['value'] === $vl ? 'selected="selected"' : '';
+			$selected = '';
+
+			if ($options['value'] === $vl) {
+				$selected = 'selected="selected"';
+			}
+
 			$html .= "<option value=\"{$option['value']}\" {$selected}>{$option['label']}</option>";
 		}
 

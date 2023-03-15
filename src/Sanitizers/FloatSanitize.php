@@ -22,7 +22,7 @@ class FloatSanitize implements SanitizableCallbackInterface
 	/**
 	 * Sanitize the value to float.
 	 *
-	 * @param mixed $value
+	 * @param mixed $value Value to sanitize.
 	 * @since 1.0.0
 	 * @return string
 	 */

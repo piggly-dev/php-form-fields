@@ -21,7 +21,7 @@ interface RenderableInterface
 	/**
 	 * Render to HTML with value.
 	 *
-	 * @param mixed $value
+	 * @param mixed $value Value to render.
 	 * @since 1.0.0
 	 * @return string
 	 */

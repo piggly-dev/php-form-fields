@@ -23,9 +23,9 @@ interface ValidatableCallbackInterface
 	 * Validate a value throwning an exception if invalid.
 	 *
 	 * @since 1.0.0
-	 * @param mixed $value
+	 * @param mixed $value Value to validate.
 	 * @return void
-	 * @throws Exception
+	 * @throws Exception When value is invalid.
 	 */
 	public function validate($value);
 }

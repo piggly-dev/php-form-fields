@@ -3,7 +3,7 @@
 namespace Pgly\FormFields\Fields;
 
 use Pgly\FormFields\Interfaces\RenderableInterface;
-use Pgly\FormFields\Options\HTMLFieldOptions;
+use Pgly\FormFields\Options\HtmlFieldOptions;
 
 /**
  * HTML Input field.
@@ -24,7 +24,7 @@ abstract class AbstractHtmlInputField implements RenderableInterface
 	 * Field options.
 	 *
 	 * @since 1.0.0
-	 * @var HTMLFieldOptions
+	 * @var HtmlFieldOptions
 	 */
 	protected $_options;
 
@@ -56,18 +56,22 @@ abstract class AbstractHtmlInputField implements RenderableInterface
 	 * Create a new field.
 	 *
 	 * @since 1.0.0
-	 * @param HTMLFieldOptions $options
+	 * @param HtmlFieldOptions $options Field options.
 	 * @return void
 	 */
-	public function __construct(HTMLFieldOptions $options = null)
+	public function __construct(HtmlFieldOptions $options = null)
 	{
-		$this->_options = \is_null($options) ? new HTMLFieldOptions() : $options;
+		if ($options === null) {
+			$options = new HtmlFieldOptions();
+		}
+
+		$this->_options = $options;
 	}
 
 	/**
 	 * Change field value.
 	 *
-	 * @param mixed $value
+	 * @param mixed $value Field value.
 	 * @since 1.0.0
 	 * @return self
 	 */
@@ -85,13 +89,13 @@ abstract class AbstractHtmlInputField implements RenderableInterface
 	 */
 	public function value()
 	{
-		return $this->_value ?? $this->_options->defaultValue() ?? '';
+		return ($this->_value ?? $this->_options->defaultValue() ?? '');
 	}
 
 	/**
 	 * Change CSS base class.
 	 *
-	 * @param string $base
+	 * @param string $base CSS base class.
 	 * @since 1.0.0
 	 * @return self
 	 */
@@ -104,7 +108,7 @@ abstract class AbstractHtmlInputField implements RenderableInterface
 	/**
 	 * Change required label.
 	 *
-	 * @param string $label
+	 * @param string $label Required label.
 	 * @since 1.0.0
 	 * @return self
 	 */
@@ -118,9 +122,9 @@ abstract class AbstractHtmlInputField implements RenderableInterface
 	 * Get field options.
 	 *
 	 * @since 1.0.0
-	 * @return HTMLFieldOptions
+	 * @return HtmlFieldOptions
 	 */
-	public function options(): HTMLFieldOptions
+	public function options(): HtmlFieldOptions
 	{
 		return $this->_options;
 	}

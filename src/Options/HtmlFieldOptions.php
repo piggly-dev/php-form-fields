@@ -3,9 +3,7 @@
 namespace Pgly\FormFields\Options;
 
 use Exception;
-use Pgly\FormFields\Interfaces\ParsableCallbackInterface;
 use Pgly\FormFields\Interfaces\SanitizableCallbackInterface;
-use Pgly\FormFields\Interfaces\TransformableCallbackInterface;
 use Pgly\FormFields\Interfaces\ValidatableCallbackInterface;
 
 /**
@@ -21,7 +19,7 @@ use Pgly\FormFields\Interfaces\ValidatableCallbackInterface;
  * @license MIT
  * @copyright 2023 Piggly Lab <dev@piggly.com.br>
  */
-class HTMLFieldOptions
+class HtmlFieldOptions
 {
 	/**
 	 * HTML Attributes.
@@ -125,7 +123,7 @@ class HTMLFieldOptions
 	/**
 	 * Change name.
 	 *
-	 * @param string $name
+	 * @param string $name Name.
 	 * @return self
 	 * @since 1.0.0
 	 */
@@ -149,7 +147,7 @@ class HTMLFieldOptions
 	/**
 	 * Change label.
 	 *
-	 * @param string $label
+	 * @param string $label Label.
 	 * @return self
 	 * @since 1.0.0
 	 */
@@ -173,7 +171,7 @@ class HTMLFieldOptions
 	/**
 	 * Change type.
 	 *
-	 * @param string $type
+	 * @param string $type Type.
 	 * @return self
 	 * @since 1.0.0
 	 */
@@ -197,7 +195,7 @@ class HTMLFieldOptions
 	/**
 	 * Change default value.
 	 *
-	 * @param mixed $default
+	 * @param mixed $default Default value.
 	 * @return self
 	 * @since 1.0.0
 	 */
@@ -221,7 +219,7 @@ class HTMLFieldOptions
 	/**
 	 * Change description.
 	 *
-	 * @param string $description
+	 * @param string $description Description.
 	 * @return self
 	 * @since 1.0.0
 	 */
@@ -245,7 +243,7 @@ class HTMLFieldOptions
 	/**
 	 * Change prefix.
 	 *
-	 * @param string $prefix
+	 * @param string $prefix Prefix.
 	 * @return self
 	 * @since 1.0.0
 	 */
@@ -269,13 +267,13 @@ class HTMLFieldOptions
 	/**
 	 * Get prefixed name.
 	 *
-	 * @param string $separator
+	 * @param string $separator Separator.
 	 * @return string
 	 * @since 1.0.0
 	 */
 	public function prefixedName($separator = '_'): string
 	{
-		if (\is_null($this->_prefix)) {
+		if ($this->_prefix === null) {
 			return $this->_name;
 		}
 
@@ -285,7 +283,7 @@ class HTMLFieldOptions
 	/**
 	 * Change allowed values.
 	 *
-	 * @param array $allowed_values
+	 * @param array $allowed_values Allowed values.
 	 * @return self
 	 * @since 1.0.0
 	 */
@@ -298,23 +296,23 @@ class HTMLFieldOptions
 	/**
 	 * Check if value is allowed.
 	 *
-	 * @param mixed $value
+	 * @param mixed $value Value to check.
 	 * @return bool
 	 * @since 1.0.0
 	 */
 	public function isAllowed($value): bool
 	{
-		return \is_null($this->_allowed_values) ? true : \in_array($value, $this->_allowed_values);
+		return ($this->_allowed_values === null) ? true : \in_array($value, $this->_allowed_values, true);
 	}
 
 	/**
 	 * Apply sanitizing callbacks.
 	 *
-	 * @param SanitizableCallbackInterface[] $sanitize
+	 * @param SanitizableCallbackInterface ...$sanitize Sanitizing callbacks.
 	 * @return self
 	 * @since 1.0.0
 	 */
-	public function sanitizeWith(SanitizableCallbackInterface ...$sanitize)
+	public function sanitizeWith(...$sanitize)
 	{
 		if (empty($this->_sanitizing)) {
 			$this->_sanitizing = $sanitize;
@@ -328,7 +326,7 @@ class HTMLFieldOptions
 	/**
 	 * Sanitize value.
 	 *
-	 * @param mixed $value
+	 * @param mixed $value Value to sanitize.
 	 * @return mixed
 	 * @since 1.0.0
 	 */
@@ -348,7 +346,7 @@ class HTMLFieldOptions
 	/**
 	 * Apply validation callbacks.
 	 *
-	 * @param ValidatableCallbackInterface[] $validation
+	 * @param ValidatableCallbackInterface[] $validation Validation callbacks.
 	 * @return self
 	 * @since 1.0.0
 	 */
@@ -361,7 +359,7 @@ class HTMLFieldOptions
 	/**
 	 * Assert value.
 	 *
-	 * @param mixed $value
+	 * @param mixed $value Value to assert.
 	 * @return bool
 	 * @since 1.0.0
 	 */
@@ -378,7 +376,7 @@ class HTMLFieldOptions
 	/**
 	 * Validate value.
 	 *
-	 * @param mixed $value
+	 * @param mixed $value Value to validate.
 	 * @return void
 	 * @since 1.0.0
 	 */
@@ -396,7 +394,7 @@ class HTMLFieldOptions
 	/**
 	 * Change column size.
 	 *
-	 * @param integer $column_size
+	 * @param integer $column_size Column size.
 	 * @return self
 	 * @since 1.0.0
 	 */
@@ -420,7 +418,6 @@ class HTMLFieldOptions
 	/**
 	 * Mark it is on a group.
 	 *
-	 * @param boolean $on_group
 	 * @return self
 	 * @since 1.0.0
 	 */
@@ -433,7 +430,6 @@ class HTMLFieldOptions
 	/**
 	 * Mark it is not on a group.
 	 *
-	 * @param boolean $on_group
 	 * @return self
 	 * @since 1.0.0
 	 */
@@ -457,8 +453,8 @@ class HTMLFieldOptions
 	/**
 	 * Add attribute.
 	 *
-	 * @param string $name
-	 * @param mixed $value
+	 * @param string $name Attribute name.
+	 * @param mixed $value Attribute value.
 	 * @return self
 	 * @since 1.0.0
 	 */
@@ -471,7 +467,7 @@ class HTMLFieldOptions
 	/**
 	 * Add attributes.
 	 *
-	 * @param array $attrs
+	 * @param array $attrs Attributes. Eg.: ['name' => 'value', 'name2' => 'value2'].
 	 * @return self
 	 * @since 1.0.0
 	 */
@@ -484,8 +480,8 @@ class HTMLFieldOptions
 	/**
 	 * Append attribute.
 	 *
-	 * @param string $name
-	 * @param mixed $value
+	 * @param string $name Attribute name.
+	 * @param mixed $value Attribute value.
 	 * @return self
 	 * @since 1.0.0
 	 */
@@ -501,14 +497,14 @@ class HTMLFieldOptions
 			return $this;
 		}
 
-		$this->_attrs[$name] .= ' '.$value;
+		$this->_attrs[$name] .= ' ' . $value;
 		return $this;
 	}
 
 	/**
 	 * Append attributes.
 	 *
-	 * @param array $attrs
+	 * @param array $attrs  Attribute name and value. Eg.: name => value.
 	 * @return self
 	 * @since 1.0.0
 	 */
@@ -524,7 +520,7 @@ class HTMLFieldOptions
 	/**
 	 * Remove attribute.
 	 *
-	 * @param string $name
+	 * @param string $name  Attribute name.
 	 * @return self
 	 * @since 1.0.0
 	 */
@@ -537,7 +533,7 @@ class HTMLFieldOptions
 	/**
 	 * Remove attributes.
 	 *
-	 * @param array $attrs
+	 * @param array $attrs Attribute names.
 	 * @return self
 	 * @since 1.0.0
 	 */
@@ -553,13 +549,13 @@ class HTMLFieldOptions
 	/**
 	 * Get attribute.
 	 *
-	 * @param string $name
+	 * @param string $name Attribute name.
 	 * @return mixed
 	 * @since 1.0.0
 	 */
 	public function getAttr(string $name)
 	{
-		return $this->_attrs[$name] ?? null;
+		return ($this->_attrs[$name] ?? null);
 	}
 
 	/**
@@ -576,7 +572,7 @@ class HTMLFieldOptions
 	/**
 	 * Check if attribute exists.
 	 *
-	 * @param string $name
+	 * @param string $name Attribute name.
 	 * @return boolean
 	 * @since 1.0.0
 	 */
@@ -600,7 +596,7 @@ class HTMLFieldOptions
 				$value = \implode(' ', $value);
 			}
 
-			$attrs[] = $name.'="'.\htmlspecialchars($value).'"';
+			$attrs[] = \sprintf('%s="%s"', $name, \htmlspecialchars($value));
 		}
 
 		return \implode(' ', $attrs);
@@ -620,37 +616,31 @@ class HTMLFieldOptions
 	 * sanitize		SanitizableCallbackInterface[]
 	 * validation	ValidatableCallbackInterface[]
 	 *
-	 * @param array $options
-	 * @param array $attrs
+	 * @param array $options Options.
+	 * @param array $attrs Attributes.
 	 * @return string
 	 * @since 1.0.0
 	 */
-	public static function create(array $options, array $attrs = []): HTMLFieldOptions
+	public static function create(array $options, array $attrs = []): HtmlFieldOptions
 	{
-		$op = new HTMLFieldOptions();
+		$op = new HtmlFieldOptions();
 
-		if (isset($options['name'])) {
-			$op->changeName(\strval($options['name']));
-		}
+		$strings = [
+			'name' => 'changeName',
+			'label' => 'changeLabel',
+			'description' => 'changeDescription',
+			'type' => 'changeType',
+			'prefix' => 'changePrefix',
+		];
 
-		if (isset($options['label'])) {
-			$op->changeLabel(\strval($options['label']));
-		}
-
-		if (isset($options['description'])) {
-			$op->changeDescription(\strval($options['description']));
-		}
-
-		if (isset($options['type'])) {
-			$op->changeType(\strval($options['type']));
+		foreach ($strings as $value => $method) {
+			if (isset($options[$value])) {
+				$op->{$method}(\strval($options[$value]));
+			}
 		}
 
 		if (isset($options['default'])) {
 			$op->changeDefaultValue($options['default']);
-		}
-
-		if (isset($options['prefix'])) {
-			$op->changePrefix(\strval($options['prefix']));
 		}
 
 		if (isset($options['column_size'])) {
