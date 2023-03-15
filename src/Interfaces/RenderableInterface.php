@@ -3,7 +3,8 @@
 namespace Pgly\FormFields\Interfaces;
 
 /**
- * Parse/sanitize a value.
+ * The renderable interface implements the render()
+ * method to render object to HTML.
  *
  * @package \Pgly\FormFields
  * @subpackage \Pgly\FormFields\Interfaces
@@ -15,15 +16,22 @@ namespace Pgly\FormFields\Interfaces;
  * @license MIT
  * @copyright 2023 Piggly Lab <dev@piggly.com.br>
  */
-interface ParsableCallbackInterface
+interface RenderableInterface
 {
 	/**
-	 * Parse/sanitize a value.
-	 * Must return value.
+	 * Render to HTML with value.
+	 *
+	 * @param mixed $value
+	 * @since 1.0.0
+	 * @return string
+	 */
+	public function render($value): string;
+
+	/**
+	 * Clean object after rendering when needed.
 	 *
 	 * @since 1.0.0
-	 * @param mixed $value
-	 * @return mixed
+	 * @return void
 	 */
-	public function parse($value);
+	public function clean();
 }

@@ -1,7 +1,7 @@
 {
 	"name": "piggly/php-form-fields",
 	"description": "A library to easily create form fields.",
-	"version": "1.0.0",
+	"version": "0.1.0",
 	"type": "library",
 	"license": "MIT",
 	"homepage": "https://github.com/piggly-dev/php-form-fields",

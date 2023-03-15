@@ -3,7 +3,7 @@
 namespace Pgly\FormFields\Interfaces;
 
 /**
- * Transform a value to another.
+ * Sanitize a value.
  *
  * @package \Pgly\FormFields
  * @subpackage \Pgly\FormFields\Interfaces
@@ -15,15 +15,15 @@ namespace Pgly\FormFields\Interfaces;
  * @license MIT
  * @copyright 2023 Piggly Lab <dev@piggly.com.br>
  */
-interface TransformableCallbackInterface
+interface SanitizableCallbackInterface
 {
 	/**
-	 * Transform a value to another.
+	 * Sanitize a value.
 	 * Must return value.
 	 *
 	 * @since 1.0.0
 	 * @param mixed $value
 	 * @return mixed
 	 */
-	public function transform($value);
+	public function sanitize($value);
 }

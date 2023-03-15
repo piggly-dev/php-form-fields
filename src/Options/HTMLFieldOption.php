@@ -4,6 +4,7 @@ namespace Pgly\FormFields\Options;
 
 use Exception;
 use Pgly\FormFields\Interfaces\ParsableCallbackInterface;
+use Pgly\FormFields\Interfaces\SanitizableCallbackInterface;
 use Pgly\FormFields\Interfaces\TransformableCallbackInterface;
 use Pgly\FormFields\Interfaces\ValidatableCallbackInterface;
 
@@ -90,20 +91,12 @@ class HTMLFieldOptions
 	protected $_allowed_values;
 
 	/**
-	 * Parse callbacks.
+	 * Sanitizing callbacks.
 	 *
 	 * @since 1.0.0
-	 * @var ParsableCallbackInterface[]|null
+	 * @var SanitizableCallbackInterface[]|null
 	 */
-	protected $_parse;
-
-	/**
-	 * Transform callbacks.
-	 *
-	 * @since 1.0.0
-	 * @var TransformableCallbackInterface[]|null
-	 */
-	protected $_transform;
+	protected $_sanitizing;
 
 	/**
 	 * Validation callbacks.
@@ -274,6 +267,22 @@ class HTMLFieldOptions
 	}
 
 	/**
+	 * Get prefixed name.
+	 *
+	 * @param string $separator
+	 * @return string
+	 * @since 1.0.0
+	 */
+	public function prefixedName($separator = '_'): string
+	{
+		if (\is_null($this->_prefix)) {
+			return $this->_name;
+		}
+
+		return $this->_prefix . $separator . $this->_name;
+	}
+
+	/**
 	 * Change allowed values.
 	 *
 	 * @param array $allowed_values
@@ -299,66 +308,38 @@ class HTMLFieldOptions
 	}
 
 	/**
-	 * Apply parse callbacks.
+	 * Apply sanitizing callbacks.
 	 *
-	 * @param ParsableCallbackInterface[] $parse
+	 * @param SanitizableCallbackInterface[] $sanitize
 	 * @return self
 	 * @since 1.0.0
 	 */
-	public function parseWith(array $parse)
+	public function sanitizeWith(SanitizableCallbackInterface ...$sanitize)
 	{
-		$this->_parse = $parse;
+		if (empty($this->_sanitizing)) {
+			$this->_sanitizing = $sanitize;
+			return $this;
+		}
+
+		$this->_sanitizing = \array_merge($this->_sanitizing, $sanitize);
 		return $this;
 	}
 
 	/**
-	 * Parse value.
+	 * Sanitize value.
 	 *
 	 * @param mixed $value
 	 * @return mixed
 	 * @since 1.0.0
 	 */
-	public function parse($value)
+	public function sanitize($value)
 	{
-		if (empty($this->_parse)) {
+		if (empty($this->_sanitizing)) {
 			return $value;
 		}
 
-		foreach ($this->_parse as $parse) {
-			$value = $parse->parse($value);
-		}
-
-		return $value;
-	}
-
-	/**
-	 * Apply transform callbacks.
-	 *
-	 * @param TransformableCallbackInterface[] $transform
-	 * @return self
-	 * @since 1.0.0
-	 */
-	public function transformWith(array $transform)
-	{
-		$this->_transform = $transform;
-		return $this;
-	}
-
-	/**
-	 * Transform value.
-	 *
-	 * @param mixed $value
-	 * @return mixed
-	 * @since 1.0.0
-	 */
-	public function transform($value)
-	{
-		if (empty($this->_transform)) {
-			return $value;
-		}
-
-		foreach ($this->_transform as $transform) {
-			$value = $transform->transform($value);
+		foreach ($this->_sanitizing as $s) {
+			$value = $s->sanitize($value);
 		}
 
 		return $value;
@@ -423,6 +404,17 @@ class HTMLFieldOptions
 	{
 		$this->_column_size = $column_size;
 		return $this;
+	}
+
+	/**
+	 * Get column size.
+	 *
+	 * @return integer
+	 * @since 1.0.0
+	 */
+	public function columnSize(): int
+	{
+		return $this->_column_size;
 	}
 
 	/**
@@ -582,6 +574,18 @@ class HTMLFieldOptions
 	}
 
 	/**
+	 * Check if attribute exists.
+	 *
+	 * @param string $name
+	 * @return boolean
+	 * @since 1.0.0
+	 */
+	public function hasAttr(string $name): bool
+	{
+		return isset($this->_attrs[$name]) && !empty($this->_attrs[$name]);
+	}
+
+	/**
 	 * Get attributes as long string.
 	 *
 	 * @return string
@@ -603,7 +607,18 @@ class HTMLFieldOptions
 	}
 
 	/**
-	 * Create object.
+	 * Create object. All options:
+	 *
+	 * name			string
+	 * label			string
+	 * description	string
+	 * type			string
+	 * default		mixed
+	 * prefix		string
+	 * column_size	integer
+	 * on_group		boolean
+	 * sanitize		SanitizableCallbackInterface[]
+	 * validation	ValidatableCallbackInterface[]
 	 *
 	 * @param array $options
 	 * @param array $attrs
@@ -646,12 +661,8 @@ class HTMLFieldOptions
 			$op->_on_group = \boolval($options['on_group']);
 		}
 
-		if (isset($options['parse'])) {
-			$op->parseWith($options['parse']);
-		}
-
-		if (isset($options['transform'])) {
-			$op->transformWith($options['transform']);
+		if (isset($options['sanitize'])) {
+			$op->sanitizeWith($options['sanitize']);
 		}
 
 		if (isset($options['validation'])) {
@@ -659,7 +670,7 @@ class HTMLFieldOptions
 		}
 
 		if (!empty($attrs)) {
-			$op->addAttrs($options['attrs']);
+			$op->addAttrs($attrs);
 		}
 
 		return $op;
