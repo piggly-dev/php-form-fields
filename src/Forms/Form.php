@@ -206,6 +206,49 @@ class Form
 	}
 
 	/**
+	 * Render form fields solving it as rows and columns.
+	 *
+	 * @param RenderAttributesInterface[] $render_attrs Attributes to render. Eg.: ['label' => new BasicRenderAttribute()].
+	 * @param int $max_column_size Max column size per row.
+	 * @since 0.1.0
+	 * @return string
+	 */
+	public function renderFields(array $render_attrs, int $max_column_size = 12): string
+	{
+		$curr_colsize = 0;
+		$rows = [];
+
+		foreach ($this->_fields as $field) {
+			$colsize = $field->options()->columnSize();
+
+			if (($curr_colsize + $colsize) > $max_column_size) {
+				$curr_colsize = 0;
+			}
+
+			if ($curr_colsize === 0) {
+				$rows[] = [];
+			}
+
+			$rows[(count($rows) - 1)][] = $field;
+			$curr_colsize += $colsize;
+		}
+
+		$html = '';
+
+		foreach ($rows as $row) {
+			$html .= "<div class=\"{$this->_cssBase}--row\">";
+
+			foreach ($row as $field) {
+				$html .= $field->render($render_attrs[$field->options()->name()]);
+			}
+
+			$html .= '</div>';
+		}
+
+		return $html;
+	}
+
+	/**
 	 * Render form header.
 	 *
 	 * @since 0.1.0

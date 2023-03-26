@@ -315,6 +315,18 @@ class HtmlFieldOptions
 	}
 
 	/**
+	 * Clean sanitizing callbacks.
+	 *
+	 * @return self
+	 * @since 0.1.0
+	 */
+	public function cleanSanitizers()
+	{
+		$this->_sanitizing = [];
+		return $this;
+	}
+
+	/**
 	 * Sanitize value.
 	 *
 	 * @param mixed $value Value to sanitize.
