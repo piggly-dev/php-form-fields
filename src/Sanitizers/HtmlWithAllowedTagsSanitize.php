@@ -5,7 +5,8 @@ namespace Pgly\FormFields\Sanitizers;
 use Pgly\FormFields\Interfaces\SanitizableCallbackInterface;
 
 /**
- * Sanitize all HTML values to special chars.
+ * Sanitize the value to a valid HTML.
+ * Works only on WordPress ecosystem.
  *
  * @package \Pgly\FormFields
  * @subpackage \Pgly\FormFields\Sanitizers
@@ -17,10 +18,11 @@ use Pgly\FormFields\Interfaces\SanitizableCallbackInterface;
  * @license MIT
  * @copyright 2023 Piggly Lab <dev@piggly.com.br>
  */
-class HtmlSanitize implements SanitizableCallbackInterface
+class HtmlWithAllowedTagsSanitize implements SanitizableCallbackInterface
 {
 	/**
-	 * Sanitize all HTML values to special chars.
+	 * Sanitize the value to a valid HTML.
+	 * Works only on WordPress ecosystem.
 	 *
 	 * @param mixed $value Value to sanitize.
 	 * @since 1.0.0
@@ -28,6 +30,6 @@ class HtmlSanitize implements SanitizableCallbackInterface
 	 */
 	public function sanitize($value): string
 	{
-		return empty($value) ? null : \htmlspecialchars($value);
+		return empty($value) ? null : \wp_kses_post($value);
 	}
 }

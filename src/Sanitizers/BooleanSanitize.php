@@ -5,7 +5,7 @@ namespace Pgly\FormFields\Sanitizers;
 use Pgly\FormFields\Interfaces\SanitizableCallbackInterface;
 
 /**
- * Sanitize all HTML values to special chars.
+ * Sanitize the value to boolean.
  *
  * @package \Pgly\FormFields
  * @subpackage \Pgly\FormFields\Sanitizers
@@ -17,10 +17,10 @@ use Pgly\FormFields\Interfaces\SanitizableCallbackInterface;
  * @license MIT
  * @copyright 2023 Piggly Lab <dev@piggly.com.br>
  */
-class HtmlSanitize implements SanitizableCallbackInterface
+class BooleanSanitize implements SanitizableCallbackInterface
 {
 	/**
-	 * Sanitize all HTML values to special chars.
+	 * Sanitize the value to float.
 	 *
 	 * @param mixed $value Value to sanitize.
 	 * @since 1.0.0
@@ -28,6 +28,6 @@ class HtmlSanitize implements SanitizableCallbackInterface
 	 */
 	public function sanitize($value): string
 	{
-		return empty($value) ? null : \htmlspecialchars($value);
+		return \boolval(($value ?? false));
 	}
 }
