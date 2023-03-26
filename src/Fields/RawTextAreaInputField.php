@@ -2,6 +2,8 @@
 
 namespace Pgly\FormFields\Fields;
 
+use InvalidArgumentException;
+use Pgly\FormFields\Interfaces\BasicRenderAttribute;
 use Pgly\FormFields\Options\HtmlFieldOptions;
 
 /**
@@ -9,8 +11,8 @@ use Pgly\FormFields\Options\HtmlFieldOptions;
  *
  * @package \Pgly\FormFields
  * @subpackage \Pgly\FormFields\Fields
- * @version 1.0.0
- * @since 1.0.0
+ * @version 0.1.0
+ * @since 0.1.0
  * @category Fields
  * @author Caique Araujo <caique@piggly.com.br>
  * @author Piggly Lab <dev@piggly.com.br>
@@ -22,7 +24,7 @@ class RawTextAreaInputField extends AbstractHtmlInputField
 	/**
 	 * Create a new field.
 	 *
-	 * @since 1.0.0
+	 * @since 0.1.0
 	 * @param HtmlFieldOptions $options Field options.
 	 * @return void
 	 */
@@ -35,13 +37,18 @@ class RawTextAreaInputField extends AbstractHtmlInputField
 	/**
 	 * Render to HTML with value.
 	 *
-	 * @param mixed $value Field value.
-	 * @since 1.0.0
+	 * @param BasicRenderAttribute $render_attrs Attributes to render.
+	 * @since 0.1.0
 	 * @return string
+	 * @throws InvalidArgumentException If $render_attrs is not BasicRenderAttribute.
 	 */
-	public function render($value = ''): string
+	public function render($render_attrs): string
 	{
-		$this->changeValue($value);
+		if (($render_attrs instanceof BasicRenderAttribute) === false) {
+			throw new InvalidArgumentException('BasicRenderAttribute expected on rendering.');
+		}
+
+		$this->changeValue($render_attrs->value());
 
 		$op = $this->_options;
 		$id = $op->prefixedName();
@@ -77,7 +84,7 @@ class RawTextAreaInputField extends AbstractHtmlInputField
 	/**
 	 * Clean object after rendering when needed.
 	 *
-	 * @since 1.0.0
+	 * @since 0.1.0
 	 * @return void
 	 */
 	public function clean()

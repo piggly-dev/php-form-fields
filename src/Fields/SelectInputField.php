@@ -2,6 +2,8 @@
 
 namespace Pgly\FormFields\Fields;
 
+use InvalidArgumentException;
+use Pgly\FormFields\Interfaces\SelectRenderAttribute;
 use Pgly\FormFields\Options\HtmlFieldOptions;
 use Pgly\FormFields\Sanitizers\HtmlSanitize;
 
@@ -10,8 +12,8 @@ use Pgly\FormFields\Sanitizers\HtmlSanitize;
  *
  * @package \Pgly\FormFields
  * @subpackage \Pgly\FormFields\Fields
- * @version 1.0.0
- * @since 1.0.0
+ * @version 0.1.0
+ * @since 0.1.0
  * @category Fields
  * @author Caique Araujo <caique@piggly.com.br>
  * @author Piggly Lab <dev@piggly.com.br>
@@ -23,7 +25,7 @@ class SelectInputField extends AbstractHtmlInputField
 	/**
 	 * Create a new field.
 	 *
-	 * @since 1.0.0
+	 * @since 0.1.0
 	 * @param HtmlFieldOptions $options Field options.
 	 * @return void
 	 */
@@ -37,14 +39,18 @@ class SelectInputField extends AbstractHtmlInputField
 	/**
 	 * Render to HTML with value.
 	 *
-	 * @param mixed $value Field value.
-	 * @param array $options Options to render. Eg.: [ ['value'=> 1, 'label'=> 'Option 1'], ['value'=> 2, 'label'=> 'Option 2']].
-	 * @since 1.0.0
+	 * @param SelectRenderAttribute $render_attrs Attributes to render.
+	 * @since 0.1.0
 	 * @return string
+	 * @throws InvalidArgumentException If $render_attrs is not SelectRenderAttribute.
 	 */
-	public function render($value = '', array $options = []): string
+	public function render($render_attrs): string
 	{
-		$this->changeValue($value);
+		if (($render_attrs instanceof SelectRenderAttribute) === false) {
+			throw new InvalidArgumentException('SelectRenderAttribute expected on rendering.');
+		}
+
+		$this->changeValue($render_attrs->value());
 
 		$op = $this->_options;
 		$id = $op->prefixedName();
@@ -64,10 +70,10 @@ class SelectInputField extends AbstractHtmlInputField
 			$html .= "<option class=\"placeholder\" value=\"\">{$op->getAttr('placeholder')}</option>";
 		}
 
-		foreach ($options as $option) {
+		foreach ($render_attrs->options() as $option) {
 			$selected = '';
 
-			if ($options['value'] === $vl) {
+			if ($option['value'] === $vl) {
 				$selected = 'selected="selected"';
 			}
 

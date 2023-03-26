@@ -7,8 +7,8 @@ namespace Pgly\FormFields\Interfaces;
  *
  * @package \Pgly\FormFields
  * @subpackage \Pgly\FormFields\Interfaces
- * @version 1.0.0
- * @since 1.0.0
+ * @version 0.1.0
+ * @since 0.1.0
  * @category Interfaces
  * @author Caique Araujo <caique@piggly.com.br>
  * @author Piggly Lab <dev@piggly.com.br>
@@ -21,7 +21,7 @@ interface SanitizableCallbackInterface
 	 * Sanitize a value.
 	 * Must return value.
 	 *
-	 * @since 1.0.0
+	 * @since 0.1.0
 	 * @param mixed $value Value to sanitize.
 	 * @return mixed
 	 */

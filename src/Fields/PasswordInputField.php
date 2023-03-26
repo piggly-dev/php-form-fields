@@ -9,8 +9,8 @@ use Pgly\FormFields\Options\HtmlFieldOptions;
  *
  * @package \Pgly\FormFields
  * @subpackage \Pgly\FormFields\Fields
- * @version 1.0.0
- * @since 1.0.0
+ * @version 0.1.0
+ * @since 0.1.0
  * @category Fields
  * @author Caique Araujo <caique@piggly.com.br>
  * @author Piggly Lab <dev@piggly.com.br>
@@ -22,7 +22,7 @@ class PasswordInputField extends TextInputField
 	/**
 	 * Create a new field.
 	 *
-	 * @since 1.0.0
+	 * @since 0.1.0
 	 * @param HtmlFieldOptions $options Field options.
 	 * @return void
 	 */

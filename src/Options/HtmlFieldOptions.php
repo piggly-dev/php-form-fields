@@ -11,8 +11,8 @@ use Pgly\FormFields\Interfaces\ValidatableCallbackInterface;
  *
  * @package \Pgly\FormFields
  * @subpackage \Pgly\FormFields\Options
- * @version 1.0.0
- * @since 1.0.0
+ * @version 0.1.0
+ * @since 0.1.0
  * @category Options
  * @author Caique Araujo <caique@piggly.com.br>
  * @author Piggly Lab <dev@piggly.com.br>
@@ -21,21 +21,12 @@ use Pgly\FormFields\Interfaces\ValidatableCallbackInterface;
  */
 class HtmlFieldOptions
 {
-	/**
-	 * HTML Attributes.
-	 *
-	 * @since 1.0.0
-	 * @var array
-	 */
-	protected $_attrs = [
-		'placeholder' => null,
-		'required' => null,
-	];
+	use HasAttrsTrait;
 
 	/**
 	 * Name.
 	 *
-	 * @since 1.0.0
+	 * @since 0.1.0
 	 * @var string|null
 	 */
 	protected $_name;
@@ -43,7 +34,7 @@ class HtmlFieldOptions
 	/**
 	 * Label.
 	 *
-	 * @since 1.0.0
+	 * @since 0.1.0
 	 * @var string|null
 	 */
 	protected $_label;
@@ -51,7 +42,7 @@ class HtmlFieldOptions
 	/**
 	 * Type.
 	 *
-	 * @since 1.0.0
+	 * @since 0.1.0
 	 * @var string|null
 	 */
 	protected $_type;
@@ -59,7 +50,7 @@ class HtmlFieldOptions
 	/**
 	 * Default value.
 	 *
-	 * @since 1.0.0
+	 * @since 0.1.0
 	 * @var mixed
 	 */
 	protected $_default;
@@ -67,7 +58,7 @@ class HtmlFieldOptions
 	/**
 	 * Description.
 	 *
-	 * @since 1.0.0
+	 * @since 0.1.0
 	 * @var string|null
 	 */
 	protected $_description;
@@ -75,7 +66,7 @@ class HtmlFieldOptions
 	/**
 	 * Prefix.
 	 *
-	 * @since 1.0.0
+	 * @since 0.1.0
 	 * @var string|null
 	 */
 	protected $_prefix;
@@ -83,7 +74,7 @@ class HtmlFieldOptions
 	/**
 	 * Allowed values.
 	 *
-	 * @since 1.0.0
+	 * @since 0.1.0
 	 * @var array|null
 	 */
 	protected $_allowed_values;
@@ -91,7 +82,7 @@ class HtmlFieldOptions
 	/**
 	 * Sanitizing callbacks.
 	 *
-	 * @since 1.0.0
+	 * @since 0.1.0
 	 * @var SanitizableCallbackInterface[]|null
 	 */
 	protected $_sanitizing;
@@ -99,7 +90,7 @@ class HtmlFieldOptions
 	/**
 	 * Validation callbacks.
 	 *
-	 * @since 1.0.0
+	 * @since 0.1.0
 	 * @var ValidatableCallbackInterface[]|null
 	 */
 	protected $_validation;
@@ -107,7 +98,7 @@ class HtmlFieldOptions
 	/**
 	 * Column size.
 	 *
-	 * @since 1.0.0
+	 * @since 0.1.0
 	 * @var integer
 	 */
 	protected $_column_size = 12;
@@ -115,7 +106,7 @@ class HtmlFieldOptions
 	/**
 	 * Is on group?
 	 *
-	 * @since 1.0.0
+	 * @since 0.1.0
 	 * @var boolean
 	 */
 	protected $_on_group = false;
@@ -125,7 +116,7 @@ class HtmlFieldOptions
 	 *
 	 * @param string $name Name.
 	 * @return self
-	 * @since 1.0.0
+	 * @since 0.1.0
 	 */
 	public function changeName(string $name)
 	{
@@ -137,7 +128,7 @@ class HtmlFieldOptions
 	 * Get name.
 	 *
 	 * @return string|null
-	 * @since 1.0.0
+	 * @since 0.1.0
 	 */
 	public function name(): ?string
 	{
@@ -149,7 +140,7 @@ class HtmlFieldOptions
 	 *
 	 * @param string $label Label.
 	 * @return self
-	 * @since 1.0.0
+	 * @since 0.1.0
 	 */
 	public function changeLabel(string $label)
 	{
@@ -161,7 +152,7 @@ class HtmlFieldOptions
 	 * Get label.
 	 *
 	 * @return string|null
-	 * @since 1.0.0
+	 * @since 0.1.0
 	 */
 	public function label(): ?string
 	{
@@ -173,7 +164,7 @@ class HtmlFieldOptions
 	 *
 	 * @param string $type Type.
 	 * @return self
-	 * @since 1.0.0
+	 * @since 0.1.0
 	 */
 	public function changeType(string $type)
 	{
@@ -185,7 +176,7 @@ class HtmlFieldOptions
 	 * Get type.
 	 *
 	 * @return string|null
-	 * @since 1.0.0
+	 * @since 0.1.0
 	 */
 	public function type(): ?string
 	{
@@ -197,7 +188,7 @@ class HtmlFieldOptions
 	 *
 	 * @param mixed $default Default value.
 	 * @return self
-	 * @since 1.0.0
+	 * @since 0.1.0
 	 */
 	public function changeDefaultValue($default)
 	{
@@ -209,7 +200,7 @@ class HtmlFieldOptions
 	 * Get default value.
 	 *
 	 * @return mixed
-	 * @since 1.0.0
+	 * @since 0.1.0
 	 */
 	public function defaultValue()
 	{
@@ -221,7 +212,7 @@ class HtmlFieldOptions
 	 *
 	 * @param string $description Description.
 	 * @return self
-	 * @since 1.0.0
+	 * @since 0.1.0
 	 */
 	public function changeDescription(string $description)
 	{
@@ -233,7 +224,7 @@ class HtmlFieldOptions
 	 * Get description.
 	 *
 	 * @return string|null
-	 * @since 1.0.0
+	 * @since 0.1.0
 	 */
 	public function description(): ?string
 	{
@@ -245,7 +236,7 @@ class HtmlFieldOptions
 	 *
 	 * @param string $prefix Prefix.
 	 * @return self
-	 * @since 1.0.0
+	 * @since 0.1.0
 	 */
 	public function changePrefix(string $prefix)
 	{
@@ -257,7 +248,7 @@ class HtmlFieldOptions
 	 * Get prefix.
 	 *
 	 * @return string|null
-	 * @since 1.0.0
+	 * @since 0.1.0
 	 */
 	public function prefix(): ?string
 	{
@@ -269,7 +260,7 @@ class HtmlFieldOptions
 	 *
 	 * @param string $separator Separator.
 	 * @return string
-	 * @since 1.0.0
+	 * @since 0.1.0
 	 */
 	public function prefixedName($separator = '_'): string
 	{
@@ -285,7 +276,7 @@ class HtmlFieldOptions
 	 *
 	 * @param array $allowed_values Allowed values.
 	 * @return self
-	 * @since 1.0.0
+	 * @since 0.1.0
 	 */
 	public function allowOnlyValues(array $allowed_values)
 	{
@@ -298,7 +289,7 @@ class HtmlFieldOptions
 	 *
 	 * @param mixed $value Value to check.
 	 * @return bool
-	 * @since 1.0.0
+	 * @since 0.1.0
 	 */
 	public function isAllowed($value): bool
 	{
@@ -310,7 +301,7 @@ class HtmlFieldOptions
 	 *
 	 * @param SanitizableCallbackInterface ...$sanitize Sanitizing callbacks.
 	 * @return self
-	 * @since 1.0.0
+	 * @since 0.1.0
 	 */
 	public function sanitizeWith(...$sanitize)
 	{
@@ -328,7 +319,7 @@ class HtmlFieldOptions
 	 *
 	 * @param mixed $value Value to sanitize.
 	 * @return mixed
-	 * @since 1.0.0
+	 * @since 0.1.0
 	 */
 	public function sanitize($value)
 	{
@@ -348,7 +339,7 @@ class HtmlFieldOptions
 	 *
 	 * @param ValidatableCallbackInterface[] $validation Validation callbacks.
 	 * @return self
-	 * @since 1.0.0
+	 * @since 0.1.0
 	 */
 	public function validateWith(array $validation)
 	{
@@ -361,7 +352,7 @@ class HtmlFieldOptions
 	 *
 	 * @param mixed $value Value to assert.
 	 * @return bool
-	 * @since 1.0.0
+	 * @since 0.1.0
 	 */
 	public function assert($value)
 	{
@@ -378,7 +369,7 @@ class HtmlFieldOptions
 	 *
 	 * @param mixed $value Value to validate.
 	 * @return void
-	 * @since 1.0.0
+	 * @since 0.1.0
 	 */
 	public function validate($value)
 	{
@@ -396,7 +387,7 @@ class HtmlFieldOptions
 	 *
 	 * @param integer $column_size Column size.
 	 * @return self
-	 * @since 1.0.0
+	 * @since 0.1.0
 	 */
 	public function changeColumnSize(int $column_size)
 	{
@@ -408,7 +399,7 @@ class HtmlFieldOptions
 	 * Get column size.
 	 *
 	 * @return integer
-	 * @since 1.0.0
+	 * @since 0.1.0
 	 */
 	public function columnSize(): int
 	{
@@ -419,7 +410,7 @@ class HtmlFieldOptions
 	 * Mark it is on a group.
 	 *
 	 * @return self
-	 * @since 1.0.0
+	 * @since 0.1.0
 	 */
 	public function onGroup()
 	{
@@ -431,7 +422,7 @@ class HtmlFieldOptions
 	 * Mark it is not on a group.
 	 *
 	 * @return self
-	 * @since 1.0.0
+	 * @since 0.1.0
 	 */
 	public function notOnGroup()
 	{
@@ -443,163 +434,11 @@ class HtmlFieldOptions
 	 * Check if it is on a group.
 	 *
 	 * @return boolean
-	 * @since 1.0.0
+	 * @since 0.1.0
 	 */
 	public function isOnGroup(): bool
 	{
 		return $this->_on_group;
-	}
-
-	/**
-	 * Add attribute.
-	 *
-	 * @param string $name Attribute name.
-	 * @param mixed $value Attribute value.
-	 * @return self
-	 * @since 1.0.0
-	 */
-	public function addAttr(string $name, $value)
-	{
-		$this->_attrs[$name] = $value;
-		return $this;
-	}
-
-	/**
-	 * Add attributes.
-	 *
-	 * @param array $attrs Attributes. Eg.: ['name' => 'value', 'name2' => 'value2'].
-	 * @return self
-	 * @since 1.0.0
-	 */
-	public function addAttrs(array $attrs)
-	{
-		$this->_attrs = \array_merge($this->_attrs, $attrs);
-		return $this;
-	}
-
-	/**
-	 * Append attribute.
-	 *
-	 * @param string $name Attribute name.
-	 * @param mixed $value Attribute value.
-	 * @return self
-	 * @since 1.0.0
-	 */
-	public function appendAttr(string $name, $value)
-	{
-		if (!isset($this->_attrs[$name])) {
-			$this->_attrs[$name] = $value;
-			return $this;
-		}
-
-		if (\is_array($this->_attrs[$name])) {
-			$this->_attrs[$name][] = $value;
-			return $this;
-		}
-
-		$this->_attrs[$name] .= ' ' . $value;
-		return $this;
-	}
-
-	/**
-	 * Append attributes.
-	 *
-	 * @param array $attrs  Attribute name and value. Eg.: name => value.
-	 * @return self
-	 * @since 1.0.0
-	 */
-	public function appendAttrs(array $attrs)
-	{
-		foreach ($attrs as $name => $value) {
-			$this->appendAttr($name, $value);
-		}
-
-		return $this;
-	}
-
-	/**
-	 * Remove attribute.
-	 *
-	 * @param string $name  Attribute name.
-	 * @return self
-	 * @since 1.0.0
-	 */
-	public function removeAttr(string $name)
-	{
-		unset($this->_attrs[$name]);
-		return $this;
-	}
-
-	/**
-	 * Remove attributes.
-	 *
-	 * @param array $attrs Attribute names.
-	 * @return self
-	 * @since 1.0.0
-	 */
-	public function removeAttrs(array $attrs)
-	{
-		foreach ($attrs as $name) {
-			$this->removeAttr($name);
-		}
-
-		return $this;
-	}
-
-	/**
-	 * Get attribute.
-	 *
-	 * @param string $name Attribute name.
-	 * @return mixed
-	 * @since 1.0.0
-	 */
-	public function getAttr(string $name)
-	{
-		return ($this->_attrs[$name] ?? null);
-	}
-
-	/**
-	 * Get attributes.
-	 *
-	 * @return array
-	 * @since 1.0.0
-	 */
-	public function getAttrs(): array
-	{
-		return $this->_attrs;
-	}
-
-	/**
-	 * Check if attribute exists.
-	 *
-	 * @param string $name Attribute name.
-	 * @return boolean
-	 * @since 1.0.0
-	 */
-	public function hasAttr(string $name): bool
-	{
-		return isset($this->_attrs[$name]) && !empty($this->_attrs[$name]);
-	}
-
-	/**
-	 * Get attributes as long string.
-	 *
-	 * @return string
-	 * @since 1.0.0
-	 */
-	public function attrs(): string
-	{
-		$attrs = [];
-
-		foreach ($this->_attrs as $name => $value) {
-			if (\is_array($value)) {
-				$value = \implode(' ', $value);
-			}
-
-			$attrs[] = \sprintf('%s="%s"', $name, \htmlspecialchars($value));
-		}
-
-		return \implode(' ', $attrs);
 	}
 
 	/**
@@ -618,8 +457,8 @@ class HtmlFieldOptions
 	 *
 	 * @param array $options Options.
 	 * @param array $attrs Attributes.
-	 * @return string
-	 * @since 1.0.0
+	 * @return HtmlFieldOptions
+	 * @since 0.1.0
 	 */
 	public static function create(array $options, array $attrs = []): HtmlFieldOptions
 	{

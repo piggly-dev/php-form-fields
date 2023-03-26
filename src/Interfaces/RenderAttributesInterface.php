@@ -2,10 +2,8 @@
 
 namespace Pgly\FormFields\Interfaces;
 
-use Exception;
-
 /**
- * Validate a value throwning an exception if invalid.
+ * Allow attributes for rendering.
  *
  * @package \Pgly\FormFields
  * @subpackage \Pgly\FormFields\Interfaces
@@ -17,15 +15,13 @@ use Exception;
  * @license MIT
  * @copyright 2023 Piggly Lab <dev@piggly.com.br>
  */
-interface ValidatableCallbackInterface
+interface RenderAttributesInterface
 {
 	/**
-	 * Validate a value throwning an exception if invalid.
+	 * Get value to render.
 	 *
 	 * @since 0.1.0
-	 * @param mixed $value Value to validate.
-	 * @return void
-	 * @throws Exception When value is invalid.
+	 * @return mixed
 	 */
-	public function validate($value);
+	public function value();
 }

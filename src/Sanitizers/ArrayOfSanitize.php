@@ -9,8 +9,8 @@ use Pgly\FormFields\Interfaces\SanitizableCallbackInterface;
  *
  * @package \Pgly\FormFields
  * @subpackage \Pgly\FormFields\Sanitizers
- * @version 1.0.0
- * @since 1.0.0
+ * @version 0.1.0
+ * @since 0.1.0
  * @category Sanitizers
  * @author Caique Araujo <caique@piggly.com.br>
  * @author Piggly Lab <dev@piggly.com.br>
@@ -23,7 +23,7 @@ class ArrayOfSanitize implements SanitizableCallbackInterface
 	 * Create a new sanitize class.
 	 *
 	 * @var SanitizableCallbackInterface
-	 * @since 1.0.0
+	 * @since 0.1.0
 	 */
 	protected $_sanitize;
 
@@ -31,7 +31,7 @@ class ArrayOfSanitize implements SanitizableCallbackInterface
 	 * Create a new instance.
 	 *
 	 * @param SanitizableCallbackInterface $sanitize Create a new sanitizer.
-	 * @since 1.0.0
+	 * @since 0.1.0
 	 * @return void
 	 */
 	public function __construct(SanitizableCallbackInterface $sanitize)
@@ -43,7 +43,7 @@ class ArrayOfSanitize implements SanitizableCallbackInterface
 	 * Sanitize all values in array.
 	 *
 	 * @param array $value Value to sanitize.
-	 * @since 1.0.0
+	 * @since 0.1.0
 	 * @return array
 	 */
 	public function sanitize($value): array

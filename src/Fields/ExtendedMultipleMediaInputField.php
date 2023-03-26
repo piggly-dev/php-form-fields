@@ -2,6 +2,8 @@
 
 namespace Pgly\FormFields\Fields;
 
+use InvalidArgumentException;
+use Pgly\FormFields\Interfaces\ExtendedMultipleMediaRenderAttribute;
 use Pgly\FormFields\Options\HtmlFieldOptions;
 use Pgly\FormFields\Sanitizers\ArrayOfSanitize;
 use Pgly\FormFields\Sanitizers\BooleanSanitize;
@@ -12,8 +14,8 @@ use Pgly\FormFields\Sanitizers\IntegerSanitize;
  *
  * @package \Pgly\FormFields
  * @subpackage \Pgly\FormFields\Fields
- * @version 1.0.0
- * @since 1.0.0
+ * @version 0.1.0
+ * @since 0.1.0
  * @category Fields
  * @author Caique Araujo <caique@piggly.com.br>
  * @author Piggly Lab <dev@piggly.com.br>
@@ -25,7 +27,7 @@ class ExtendedMultipleMediaInputField extends AbstractHtmlInputField
 	/**
 	 * Create a new field.
 	 *
-	 * @since 1.0.0
+	 * @since 0.1.0
 	 * @param HtmlFieldOptions $options Field options.
 	 * @return void
 	 */
@@ -33,22 +35,24 @@ class ExtendedMultipleMediaInputField extends AbstractHtmlInputField
 	{
 		parent::__construct($options);
 		$this->_options->changeType('multiple-media');
-		$this->_options->sanitizeWith(new ArrayOfSanitize(new IntegerSanitize()));
 	}
 
 	/**
 	 * Render to HTML with value.
 	 *
-	 * @param array $value Field value.
-	 * @param array $src Media source.
-	 * @param array $labels Labels to clean and select.
-	 * @since 1.0.0
+	 * @param ExtendedMultipleMediaRenderAttribute $render_attrs Attributes to render.
+	 * @since 0.1.0
 	 * @return string
+	 * @throws InvalidArgumentException If $render_attrs is not ExtendedMultipleMediaRenderAttribute.
 	 */
-	public function render($value = [], $src = [], array $labels = []): string
+	public function render($render_attrs): string
 	{
-		$this->changeValue($value);
-		$lbls = \array_merge(['clean' => 'Clean All', 'select' => 'Add More'], $labels);
+		if (($render_attrs instanceof ExtendedMultipleMediaRenderAttribute) === false) {
+			throw new InvalidArgumentException('ExtendedMultipleMediaRenderAttribute expected on rendering.');
+		}
+
+		$this->changeValue($render_attrs->value());
+		$lbls = $render_attrs->labels();
 
 		$op = $this->_options;
 		$attrs = $op->attrs();
@@ -57,7 +61,7 @@ class ExtendedMultipleMediaInputField extends AbstractHtmlInputField
 		$bs = $this->_cssBase;
 		$fr = $op->onGroup() ? 'pgly-gform' : 'pgly-form';
 		$vl = implode(',', $this->value());
-		$srcs = implode(',', $src);
+		$srcs = implode(',', $render_attrs->srcs());
 
 		$html  = "<div class=\"{$bs}--column {$bs}-col--{$op->columnSize()}\">";
 		$html .= "<div class=\"{$bs}--field {$bs}--media-wrapper {$fr}--input {$fr}--multiple-media\" data-name=\"{$op->name()}\">";

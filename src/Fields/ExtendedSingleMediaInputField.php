@@ -2,6 +2,8 @@
 
 namespace Pgly\FormFields\Fields;
 
+use InvalidArgumentException;
+use Pgly\FormFields\Interfaces\ExtendedSingleMediaRenderAttribute;
 use Pgly\FormFields\Options\HtmlFieldOptions;
 use Pgly\FormFields\Sanitizers\ArrayOfSanitize;
 use Pgly\FormFields\Sanitizers\BooleanSanitize;
@@ -12,8 +14,8 @@ use Pgly\FormFields\Sanitizers\IntegerSanitize;
  *
  * @package \Pgly\FormFields
  * @subpackage \Pgly\FormFields\Fields
- * @version 1.0.0
- * @since 1.0.0
+ * @version 0.1.0
+ * @since 0.1.0
  * @category Fields
  * @author Caique Araujo <caique@piggly.com.br>
  * @author Piggly Lab <dev@piggly.com.br>
@@ -25,7 +27,7 @@ class ExtendedSingleMediaInputField extends AbstractHtmlInputField
 	/**
 	 * Create a new field.
 	 *
-	 * @since 1.0.0
+	 * @since 0.1.0
 	 * @param HtmlFieldOptions $options Field options.
 	 * @return void
 	 */
@@ -33,22 +35,24 @@ class ExtendedSingleMediaInputField extends AbstractHtmlInputField
 	{
 		parent::__construct($options);
 		$this->_options->changeType('single-media');
-		$this->_options->sanitizeWith(new ArrayOfSanitize(new IntegerSanitize()));
 	}
 
 	/**
 	 * Render to HTML with value.
 	 *
-	 * @param string $value Field value.
-	 * @param string $src Media source.
-	 * @param array $labels Labels to clean and select.
-	 * @since 1.0.0
+	 * @param ExtendedSingleMediaRenderAttribute $render_attrs Attributes to render.
+	 * @since 0.1.0
 	 * @return string
+	 * @throws InvalidArgumentException If $render_attrs is not ExtendedSingleMediaRenderAttribute.
 	 */
-	public function render($value = '', $src = '', array $labels = []): string
+	public function render($render_attrs): string
 	{
-		$this->changeValue($value);
-		$lbls = \array_merge(['clean' => 'Clean All', 'select' => 'Select'], $labels);
+		if (($render_attrs instanceof ExtendedSingleMediaRenderAttribute) === false) {
+			throw new InvalidArgumentException('ExtendedSingleMediaRenderAttribute expected on rendering.');
+		}
+
+		$this->changeValue($render_attrs->value());
+		$lbls = $render_attrs->labels();
 
 		$op = $this->_options;
 		$attrs = $op->attrs();
@@ -67,7 +71,7 @@ class ExtendedSingleMediaInputField extends AbstractHtmlInputField
 		}
 
 		$html .= "<div id=\"{$id}\" class=\"container\" {$attrs}>
-			<img data-value=\"{$vl}\" data-src=\"{$src}\" />
+			<img data-value=\"{$vl}\" data-src=\"{$render_attrs->src()}\" />
 			<span class=\"{$bs}--placeholder\">{$pl}</span>
 		</div>";
 

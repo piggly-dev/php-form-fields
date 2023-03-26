@@ -2,6 +2,8 @@
 
 namespace Pgly\FormFields\Fields;
 
+use InvalidArgumentException;
+use Pgly\FormFields\Interfaces\ExtendedSelectRenderAttribute;
 use Pgly\FormFields\Options\HtmlFieldOptions;
 use Pgly\FormFields\Sanitizers\BooleanSanitize;
 
@@ -10,8 +12,8 @@ use Pgly\FormFields\Sanitizers\BooleanSanitize;
  *
  * @package \Pgly\FormFields
  * @subpackage \Pgly\FormFields\Fields
- * @version 1.0.0
- * @since 1.0.0
+ * @version 0.1.0
+ * @since 0.1.0
  * @category Fields
  * @author Caique Araujo <caique@piggly.com.br>
  * @author Piggly Lab <dev@piggly.com.br>
@@ -23,7 +25,7 @@ class ExtendedSelectInputField extends AbstractHtmlInputField
 	/**
 	 * Create a new field.
 	 *
-	 * @since 1.0.0
+	 * @since 0.1.0
 	 * @param HtmlFieldOptions $options Field options.
 	 * @return void
 	 */
@@ -31,20 +33,24 @@ class ExtendedSelectInputField extends AbstractHtmlInputField
 	{
 		parent::__construct($options);
 		$this->_options->changeType('eselect');
-		$this->_options->sanitizeWith(new BooleanSanitize());
 	}
 
 	/**
 	 * Render to HTML with value.
 	 *
-	 * @param string $value Field value.
-	 * @param string $lbl Label to field.
-	 * @since 1.0.0
+	 * @param ExtendedSelectRenderAttribute $render_attrs Attributes to render.
+	 * @since 0.1.0
 	 * @return string
+	 * @throws InvalidArgumentException If $render_attrs is not ExtendedSelectRenderAttribute.
 	 */
-	public function render($value = '', $lbl = ''): string
+	public function render($render_attrs): string
 	{
-		$this->changeValue($value);
+		if (($render_attrs instanceof ExtendedSelectRenderAttribute) === false) {
+			throw new InvalidArgumentException('ExtendedSelectRenderAttribute expected on rendering.');
+		}
+
+		$this->changeValue($render_attrs->value());
+		$lbl = $render_attrs->label();
 
 		$op = $this->_options;
 		$attrs = $op->attrs();

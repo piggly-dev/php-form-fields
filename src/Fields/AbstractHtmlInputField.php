@@ -4,14 +4,15 @@ namespace Pgly\FormFields\Fields;
 
 use Pgly\FormFields\Interfaces\RenderableInterface;
 use Pgly\FormFields\Options\HtmlFieldOptions;
+use RuntimeException;
 
 /**
  * HTML Input field.
  *
  * @package \Pgly\FormFields
  * @subpackage \Pgly\FormFields\Fields
- * @version 1.0.0
- * @since 1.0.0
+ * @version 0.1.0
+ * @since 0.1.0
  * @category Fields
  * @author Caique Araujo <caique@piggly.com.br>
  * @author Piggly Lab <dev@piggly.com.br>
@@ -23,7 +24,7 @@ abstract class AbstractHtmlInputField implements RenderableInterface
 	/**
 	 * Field options.
 	 *
-	 * @since 1.0.0
+	 * @since 0.1.0
 	 * @var HtmlFieldOptions
 	 */
 	protected $_options;
@@ -31,7 +32,7 @@ abstract class AbstractHtmlInputField implements RenderableInterface
 	/**
 	 * Field value.
 	 *
-	 * @since 1.0.0
+	 * @since 0.1.0
 	 * @var mixed
 	 */
 	protected $_value;
@@ -39,7 +40,7 @@ abstract class AbstractHtmlInputField implements RenderableInterface
 	/**
 	 * CSS base class.
 	 *
-	 * @since 1.0.0
+	 * @since 0.1.0
 	 * @var string
 	 */
 	protected $_cssBase = 'pgly-wps';
@@ -47,7 +48,7 @@ abstract class AbstractHtmlInputField implements RenderableInterface
 	/**
 	 * Required label.
 	 *
-	 * @since 1.0.0
+	 * @since 0.1.0
 	 * @var string
 	 */
 	protected $_requiredLabel = 'Obrigatório';
@@ -55,7 +56,7 @@ abstract class AbstractHtmlInputField implements RenderableInterface
 	/**
 	 * Create a new field.
 	 *
-	 * @since 1.0.0
+	 * @since 0.1.0
 	 * @param HtmlFieldOptions $options Field options.
 	 * @return void
 	 */
@@ -72,7 +73,7 @@ abstract class AbstractHtmlInputField implements RenderableInterface
 	 * Change field value.
 	 *
 	 * @param mixed $value Field value.
-	 * @since 1.0.0
+	 * @since 0.1.0
 	 * @return self
 	 */
 	public function changeValue($value)
@@ -84,7 +85,7 @@ abstract class AbstractHtmlInputField implements RenderableInterface
 	/**
 	 * Get field value.
 	 *
-	 * @since 1.0.0
+	 * @since 0.1.0
 	 * @return mixed
 	 */
 	public function value()
@@ -96,7 +97,7 @@ abstract class AbstractHtmlInputField implements RenderableInterface
 	 * Change CSS base class.
 	 *
 	 * @param string $base CSS base class.
-	 * @since 1.0.0
+	 * @since 0.1.0
 	 * @return self
 	 */
 	public function changeCssBase(string $base)
@@ -109,7 +110,7 @@ abstract class AbstractHtmlInputField implements RenderableInterface
 	 * Change required label.
 	 *
 	 * @param string $label Required label.
-	 * @since 1.0.0
+	 * @since 0.1.0
 	 * @return self
 	 */
 	public function changeRequiredLabel(string $label)
@@ -121,7 +122,7 @@ abstract class AbstractHtmlInputField implements RenderableInterface
 	/**
 	 * Get field options.
 	 *
-	 * @since 1.0.0
+	 * @since 0.1.0
 	 * @return HtmlFieldOptions
 	 */
 	public function options(): HtmlFieldOptions
@@ -132,7 +133,7 @@ abstract class AbstractHtmlInputField implements RenderableInterface
 	/**
 	 * Clean object after rendering when needed.
 	 *
-	 * @since 1.0.0
+	 * @since 0.1.0
 	 * @return void
 	 */
 	public function clean()

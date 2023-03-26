@@ -3,8 +3,7 @@
 namespace Pgly\FormFields\Interfaces;
 
 /**
- * The renderable interface implements the render()
- * method to render object to HTML.
+ * Basic render attributes.
  *
  * @package \Pgly\FormFields
  * @subpackage \Pgly\FormFields\Interfaces
@@ -16,22 +15,36 @@ namespace Pgly\FormFields\Interfaces;
  * @license MIT
  * @copyright 2023 Piggly Lab <dev@piggly.com.br>
  */
-interface RenderableInterface
+class BasicRenderAttribute implements RenderAttributesInterface
 {
 	/**
-	 * Render to HTML with value.
+	 * Value to render.
 	 *
-	 * @param RenderAttributesInterface $attrs Attributes to render.
 	 * @since 0.1.0
-	 * @return string
+	 * @var mixed
 	 */
-	public function render($attrs): string;
+	protected $_value;
 
 	/**
-	 * Clean object after rendering when needed.
+	 * Create a new render attribute.
 	 *
+	 * @param mixed $value Value to render.
 	 * @since 0.1.0
 	 * @return void
 	 */
-	public function clean();
+	public function __construct($value)
+	{
+		$this->_value = $value;
+	}
+
+	/**
+	 * Get value to render.
+	 *
+	 * @since 0.1.0
+	 * @return mixed
+	 */
+	public function value()
+	{
+		return $this->_value;
+	}
 }

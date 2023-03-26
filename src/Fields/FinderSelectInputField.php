@@ -2,6 +2,8 @@
 
 namespace Pgly\FormFields\Fields;
 
+use InvalidArgumentException;
+use Pgly\FormFields\Interfaces\FinderSelectRenderAttribute;
 use Pgly\FormFields\Options\HtmlFieldOptions;
 use Pgly\FormFields\Sanitizers\ArrayOfSanitize;
 use Pgly\FormFields\Sanitizers\IntegerSanitize;
@@ -11,8 +13,8 @@ use Pgly\FormFields\Sanitizers\IntegerSanitize;
  *
  * @package \Pgly\FormFields
  * @subpackage \Pgly\FormFields\Fields
- * @version 1.0.0
- * @since 1.0.0
+ * @version 0.1.0
+ * @since 0.1.0
  * @category Fields
  * @author Caique Araujo <caique@piggly.com.br>
  * @author Piggly Lab <dev@piggly.com.br>
@@ -24,7 +26,7 @@ class FinderSelectInputField extends AbstractHtmlInputField
 	/**
 	 * Create a new field.
 	 *
-	 * @since 1.0.0
+	 * @since 0.1.0
 	 * @param HtmlFieldOptions $options Field options.
 	 * @return void
 	 */
@@ -32,22 +34,25 @@ class FinderSelectInputField extends AbstractHtmlInputField
 	{
 		parent::__construct($options);
 		$this->_options->changeType('finder');
-		$this->_options->sanitizeWith(new ArrayOfSanitize(new IntegerSanitize()));
 	}
 
 	/**
 	 * Render to HTML with value.
 	 *
-	 * @param string $value Field value.
-	 * @param string $lbl Field label.
-	 * @param array $labels Labels to search and unselect.
-	 * @since 1.0.0
+	 * @param FinderSelectRenderAttribute $render_attrs Attributes to render.
+	 * @since 0.1.0
 	 * @return string
+	 * @throws InvalidArgumentException If $render_attrs is not FinderSelectRenderAttribute.
 	 */
-	public function render($value = '', $lbl = '', array $labels = []): string
+	public function render($render_attrs): string
 	{
-		$this->changeValue($value);
-		$lbls = \array_merge(['search' => 'Search', 'unselect' => 'Unselect'], $labels);
+		if (($render_attrs instanceof FinderSelectRenderAttribute) === false) {
+			throw new InvalidArgumentException('FinderSelectRenderAttribute expected on rendering.');
+		}
+
+		$this->changeValue($render_attrs->value());
+		$lbls = $render_attrs->labels();
+		$lbl = $render_attrs->label();
 
 		$op = $this->_options;
 		$attrs = $op->attrs();

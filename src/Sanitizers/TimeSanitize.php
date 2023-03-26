@@ -10,8 +10,8 @@ use Pgly\FormFields\Interfaces\SanitizableCallbackInterface;
  *
  * @package \Pgly\FormFields
  * @subpackage \Pgly\FormFields\Sanitizers
- * @version 1.0.0
- * @since 1.0.0
+ * @version 0.1.0
+ * @since 0.1.0
  * @category Sanitizers
  * @author Caique Araujo <caique@piggly.com.br>
  * @author Piggly Lab <dev@piggly.com.br>
@@ -24,7 +24,7 @@ class TimeSanitize implements SanitizableCallbackInterface
 	 * Sanitize the value to time.
 	 *
 	 * @param mixed $value Value to sanitize.
-	 * @since 1.0.0
+	 * @since 0.1.0
 	 * @return string
 	 */
 	public function sanitize($value): string
