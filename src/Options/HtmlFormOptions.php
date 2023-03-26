@@ -67,7 +67,9 @@ class HtmlFormOptions
 	 * @since 0.1.0
 	 * @var array
 	 */
-	protected $_labels = [];
+	protected $_labels = [
+		'submit' => 'Submit'
+	];
 
 	/**
 	 * Render mode.

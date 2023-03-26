@@ -2,36 +2,36 @@
 
 namespace Pgly\FormFields\Forms;
 
+use InvalidArgumentException;
 use Pgly\FormFields\Fields\AbstractHtmlInputField;
-use Pgly\FormFields\Interfaces\RenderAttributesInterface;
-use Pgly\FormFields\Options\HtmlFormOptions;
+use Pgly\FormFields\Interfaces\GroupRenderAttribute;
 use Pgly\FormFields\Options\HtmlGroupFormOptions;
 
 /**
- * HTML form.
+ * Group many input into a sub form.
  *
  * @package \Pgly\FormFields
- * @subpackage \Pgly\FormFields\Options
+ * @subpackage \Pgly\FormFields\Forms
  * @version 0.1.0
  * @since 0.1.0
- * @category Options
+ * @category Forms
  * @author Caique Araujo <caique@piggly.com.br>
  * @author Piggly Lab <dev@piggly.com.br>
  * @license MIT
  * @copyright 2023 Piggly Lab <dev@piggly.com.br>
  */
-class Form
+class GroupForm
 {
 	/**
 	 * Form options.
 	 *
 	 * @since 0.1.0
-	 * @var HtmlFormOptions
+	 * @var HtmlGroupFormOptions
 	 */
 	protected $_options;
 
 	/**
-	 * Form fields.
+	 * Group form fields.
 	 *
 	 * @since 0.1.0
 	 * @var AbstractHtmlInputField[]
@@ -47,21 +47,29 @@ class Form
 	protected $_cssBase = '{$bs}';
 
 	/**
-	 * Create a new form.
+	 * Create a new field.
 	 *
-	 * @param HtmlFormOptions $options Form options.
-	 * @param AbstractHtmlInputField[] $fields Form fields.
 	 * @since 0.1.0
+	 * @param HtmlGroupFormOptions $options Field options.
+	 * @param AbstractHtmlInputField[] $fields Field fields.
 	 * @return void
 	 */
-	public function __construct(HtmlFormOptions $options = null, array $fields = [])
+	public function __construct(HtmlGroupFormOptions $options = null, array $fields = [])
 	{
 		if ($options === null) {
-			$options = new HtmlFormOptions();
+			$options = new HtmlGroupFormOptions();
 		}
 
 		$this->_options = $options;
-		$this->_fields = $fields;
+		$this->_fields = \array_map(function (AbstractHtmlInputField $field) {
+			if ($field->options()->onGroup()) {
+				return $field;
+			}
+
+			$_field = clone $field;
+			$_field->options()->onGroup(true);
+			return $_field;
+		}, $fields);
 	}
 
 	/**
@@ -145,12 +153,12 @@ class Form
 	}
 
 	/**
-	 * Get form options.
+	 * Get group form options.
 	 *
 	 * @since 0.1.0
-	 * @return HtmlFormOptions
+	 * @return HtmlGroupFormOptions
 	 */
-	public function options(): HtmlFormOptions
+	public function options(): HtmlGroupFormOptions
 	{
 		return $this->_options;
 	}
@@ -169,18 +177,6 @@ class Form
 	}
 
 	/**
-	 * Convert form to a group from.
-	 *
-	 * @param HtmlGroupFormOptions $options Group options.
-	 * @since 0.1.0
-	 * @return GroupForm
-	 */
-	public function toGroup(HtmlGroupFormOptions $options): GroupForm
-	{
-		return new GroupForm($options, $this->_fields);
-	}
-
-	/**
 	 * Render form header.
 	 *
 	 * @since 0.1.0
@@ -189,19 +185,14 @@ class Form
 	public function renderHeader(): string
 	{
 		$bs = $this->_cssBase;
-		$id = $this->_options->getAttr('id', $this->_options->name());
 		$name = $this->_options->name();
-		$action = $this->_options->action();
-		$method = $this->_options->method();
 		$attrs = $this->_options->getAttrs();
-		$submit_label = ($this->_options->labels()['submit'] ?? 'Submit');
 
-		$html  = "<form id=\"{$id}\" name=\"{$name}\" action=\"{$action}\" method=\"{$method}\" {$attrs}>";
-
-		$html .= "<div class=\"{$bs}--row\"><div class=\"{$bs}--column\">";
-		$html .= "<button class=\"{$bs}--button {$bs}-is-primary pgly-async--behaviour pgly-form--submit\">{$submit_label}<svg class=\"{$bs}--spinner {$bs}-is-white\" viewBox=\"0 0 50 50\"><circle class=\"path\" cx=\"25\" cy=\"25\" r=\"20\" fill=\"none\" stroke-width=\"5\"></circle></svg></button>";
-		$html .= '</div></div>';
-
+		$html = "<div class=\"{$bs}--column {$bs}-col--12\">";
+		$html .= "<div class=\"{$bs}--group pgly-form--input pgly-form--group\" data-name=\"{$name}\" {$attrs}>";
+		$html .= "<span class=\"{$bs}--message\"></span>";
+		$html .= "<svg class=\"{$bs}--spinner {$bs}-is-primary\" viewBox=\"0 0 50 50\"><circle class=\"path\" cx=\"25\" cy=\"25\" r=\"20\" fill=\"none\" stroke-width=\"5\"></circle></svg>";
+		$html .= '<div class="container">';
 		return $html;
 	}
 
@@ -214,12 +205,17 @@ class Form
 	public function renderFooter(): string
 	{
 		$bs = $this->_cssBase;
-		$submit_label = ($this->_options->labels()['submit'] ?? 'Submit');
+		$submit_label = ($this->_options->labels()['submit'] ?? 'Add Data');
+		$cancel_label = ($this->_options->labels()['cancel'] ?? 'Cancel');
 
-		$html  = '<div class="{$bs}--row"><div class="{$bs}--column">';
-		$html .= "<button class=\"{$bs}--button {$bs}-is-primary pgly-async--behaviour pgly-form--submit\">{$submit_label}<svg class=\"{$bs}--spinner {$bs}-is-white\" viewBox=\"0 0 50 50\"><circle class=\"path\" cx=\"25\" cy=\"25\" r=\"20\" fill=\"none\" stroke-width=\"5\"></circle></svg></button>";
+		$html  = "<div class=\"{$bs}--row\"><div class=\"{$bs}--column\">";
+		$html .= "<button class=\"{$bs}--button {$bs}-is-primary pgly-gform--submit\">{$submit_label}</button>";
+		$html .= "<button class=\"{$bs}--button {$bs}-is-secondary pgly-gform--cancel\">{$cancel_label}</button>";
 		$html .= '</div></div>';
-		$html .= '</form>';
+		$html .= "<div class=\"{$bs}--row\"><div class=\"{$bs}--column {$bs}--items\"></div></div>";
+		$html .= '</div>';
+		$html .= '</div>';
+		$html .= '</div>';
 
 		return $html;
 	}
