@@ -3,6 +3,8 @@
 namespace Pgly\FormFields\Options;
 
 use InvalidArgumentException;
+use Pgly\FormFields\Options\Traits\HasAttrsTrait;
+use Pgly\FormFields\Sanitizers\UrlSanitize;
 
 /**
  * Options to build an HTML form.
@@ -141,7 +143,7 @@ class HtmlFormOptions
 	 */
 	public function changeAction(string $action)
 	{
-		$this->_action = \filter_var($action, \FILTER_SANITIZE_URL);
+		$this->_action = (new UrlSanitize())->sanitize($action);
 		return $this;
 	}
 
@@ -172,7 +174,7 @@ class HtmlFormOptions
 			throw new InvalidArgumentException('Invalid HTTP method.');
 		}
 
-		$this->_method = $method;
+		$this->_method = \strtoupper($method);
 		return $this;
 	}
 
@@ -201,7 +203,7 @@ class HtmlFormOptions
 			throw new InvalidArgumentException('Invalid render mode.');
 		}
 
-		$this->_render_mode = $render_mode;
+		$this->_render_mode = \strtolower($render_mode);
 		return $this;
 	}
 

@@ -1,15 +1,15 @@
 <?php
 
-namespace Pgly\FormFields\Options;
+namespace Pgly\FormFields\Options\Traits;
 
 /**
  * Option has attributes.
  *
  * @package \Pgly\FormFields
- * @subpackage \Pgly\FormFields\Options
+ * @subpackage \Pgly\FormFields\Options\Traits
  * @version 0.1.0
  * @since 0.1.0
- * @category Options
+ * @category Traits
  * @author Caique Araujo <caique@piggly.com.br>
  * @author Piggly Lab <dev@piggly.com.br>
  * @license MIT
@@ -35,7 +35,7 @@ trait HasAttrsTrait
 	 */
 	public function addAttr(string $name, $value)
 	{
-		$this->_attrs[$name] = $value;
+		$this->_attrs[$name] = ($value);
 		return $this;
 	}
 
@@ -63,16 +63,16 @@ trait HasAttrsTrait
 	public function appendAttr(string $name, $value)
 	{
 		if (!isset($this->_attrs[$name])) {
-			$this->_attrs[$name] = $value;
+			$this->_attrs[$name] = ($value);
 			return $this;
 		}
 
 		if (\is_array($this->_attrs[$name])) {
-			$this->_attrs[$name][] = $value;
+			$this->_attrs[$name][] = ($value);
 			return $this;
 		}
 
-		$this->_attrs[$name] .= ' ' . $value;
+		$this->_attrs[$name] .= ' ' . ($value);
 		return $this;
 	}
 

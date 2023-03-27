@@ -3,6 +3,7 @@
 namespace Pgly\FormFields\Options;
 
 use InvalidArgumentException;
+use Pgly\FormFields\Options\Traits\HasAttrsTrait;
 
 /**
  * Options to build an HTML form.

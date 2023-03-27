@@ -5,6 +5,7 @@ namespace Pgly\FormFields\Options;
 use Exception;
 use Pgly\FormFields\Interfaces\SanitizableCallbackInterface;
 use Pgly\FormFields\Interfaces\ValidatableCallbackInterface;
+use Pgly\FormFields\Options\Traits\HasAttrsTrait;
 
 /**
  * Options to build an HTML field.
@@ -120,7 +121,7 @@ class HtmlFieldOptions
 	 */
 	public function changeName(string $name)
 	{
-		$this->_name = $name;
+		$this->_name = \htmlspecialchars($name);
 		return $this;
 	}
 
@@ -144,7 +145,7 @@ class HtmlFieldOptions
 	 */
 	public function changeLabel(string $label)
 	{
-		$this->_label = $label;
+		$this->_label = \htmlspecialchars($label);
 		return $this;
 	}
 
@@ -168,7 +169,7 @@ class HtmlFieldOptions
 	 */
 	public function changeType(string $type)
 	{
-		$this->_type = $type;
+		$this->_type = \htmlspecialchars($type);
 		return $this;
 	}
 
@@ -216,7 +217,7 @@ class HtmlFieldOptions
 	 */
 	public function changeDescription(string $description)
 	{
-		$this->_description = $description;
+		$this->_description = \htmlspecialchars($description);
 		return $this;
 	}
 
@@ -240,7 +241,7 @@ class HtmlFieldOptions
 	 */
 	public function changePrefix(string $prefix)
 	{
-		$this->_prefix = $prefix;
+		$this->_prefix = \htmlspecialchars($prefix);
 		return $this;
 	}
 
@@ -259,10 +260,10 @@ class HtmlFieldOptions
 	 * Get prefixed name.
 	 *
 	 * @param string $separator Separator.
-	 * @return string
+	 * @return string|null
 	 * @since 0.1.0
 	 */
-	public function prefixedName($separator = '_'): string
+	public function prefixedName($separator = '_'): ?string
 	{
 		if ($this->_prefix === null) {
 			return $this->_name;
@@ -349,13 +350,18 @@ class HtmlFieldOptions
 	/**
 	 * Apply validation callbacks.
 	 *
-	 * @param ValidatableCallbackInterface[] $validation Validation callbacks.
+	 * @param ValidatableCallbackInterface[] ...$validation Validation callbacks.
 	 * @return self
 	 * @since 0.1.0
 	 */
-	public function validateWith(array $validation)
+	public function validateWith(...$validation)
 	{
-		$this->_validation = $validation;
+		if (empty($this->_validation)) {
+			$this->_validation = $validation;
+			return $this;
+		}
+
+		$this->_validation = \array_merge($this->_validation, $validation);
 		return $this;
 	}
 
@@ -392,6 +398,18 @@ class HtmlFieldOptions
 		foreach ($this->_validation as $validation) {
 			$validation->validate($value);
 		}
+	}
+
+	/**
+	 * Clean validations callbacks.
+	 *
+	 * @return self
+	 * @since 0.1.0
+	 */
+	public function cleanValidations()
+	{
+		$this->_validation = [];
+		return $this;
 	}
 
 	/**
