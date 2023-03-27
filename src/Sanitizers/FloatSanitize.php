@@ -24,10 +24,10 @@ class FloatSanitize implements SanitizableCallbackInterface
 	 *
 	 * @param mixed $value Value to sanitize.
 	 * @since 0.1.0
-	 * @return string
+	 * @return float|null
 	 */
-	public function sanitize($value): string
+	public function sanitize($value): ?float
 	{
-		return empty($value) ? null : \floatval($value);
+		return (empty($value) && $value !== 0) ? null : \floatval($value);
 	}
 }

@@ -24,10 +24,10 @@ class IntegerSanitize implements SanitizableCallbackInterface
 	 *
 	 * @param mixed $value Value to sanitize.
 	 * @since 0.1.0
-	 * @return string
+	 * @return int|null
 	 */
-	public function sanitize($value): string
+	public function sanitize($value): ?int
 	{
-		return empty($value) ? null : \intval($value);
+		return (empty($value) && $value !== 0) ? null : \intval($value);
 	}
 }

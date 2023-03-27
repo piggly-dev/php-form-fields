@@ -24,10 +24,18 @@ class BooleanSanitize implements SanitizableCallbackInterface
 	 *
 	 * @param mixed $value Value to sanitize.
 	 * @since 0.1.0
-	 * @return string
+	 * @return bool
 	 */
-	public function sanitize($value): string
+	public function sanitize($value): bool
 	{
+		if ($value === 'on' || $value === 'true' || $value === '1') {
+			return true;
+		}
+
+		if ($value === 'off' || $value === 'false' || $value === '0') {
+			return false;
+		}
+
 		return \boolval(($value ?? false));
 	}
 }

@@ -49,10 +49,6 @@ class ArrayOfSanitize implements SanitizableCallbackInterface
 	public function sanitize($value): array
 	{
 		return \array_map(function ($v) {
-			if (empty($value)) {
-				return null;
-			}
-
 			return $this->_sanitize->sanitize($v);
 		}, $value);
 	}

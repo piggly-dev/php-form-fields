@@ -2,7 +2,9 @@
 
 namespace Pgly\FormFields\Sanitizers;
 
+use DateTime;
 use DateTimeInterface;
+use Exception;
 use Pgly\FormFields\Interfaces\SanitizableCallbackInterface;
 
 /**
@@ -25,9 +27,9 @@ class DateSanitize implements SanitizableCallbackInterface
 	 *
 	 * @param mixed $value Value to sanitize.
 	 * @since 0.1.0
-	 * @return string
+	 * @return string|null
 	 */
-	public function sanitize($value): string
+	public function sanitize($value): ?string
 	{
 		if (empty($value)) {
 			return null;
@@ -37,6 +39,10 @@ class DateSanitize implements SanitizableCallbackInterface
 			return $value->format('Y-m-d');
 		}
 
-		return \htmlspecialchars($value);
+		try {
+			return (new DateTime($value))->format('Y-m-d');
+		} catch (Exception $e) {
+			return '0000-00-00';
+		}
 	}
 }

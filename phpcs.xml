@@ -2,6 +2,12 @@
 <ruleset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="PSR12"
 	xsi:noNamespaceSchemaLocation="phpcs.xsd">
 	<description>Wordpress.</description>
+
+	<exclude-pattern>/tests/</exclude-pattern>
+	<exclude-pattern>/vendor/</exclude-pattern>
+	<exclude-pattern>/build/</exclude-pattern>
+	<exclude-pattern>/debug/</exclude-pattern>
+
 	<arg name="tab-width" value="3" />
 
 	<rule ref="WordPress">

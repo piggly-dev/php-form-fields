@@ -26,9 +26,9 @@ class HtmlWithAllowedTagsSanitize implements SanitizableCallbackInterface
 	 *
 	 * @param mixed $value Value to sanitize.
 	 * @since 0.1.0
-	 * @return string
+	 * @return string|null
 	 */
-	public function sanitize($value): string
+	public function sanitize($value): ?string
 	{
 		return empty($value) ? null : \wp_kses_post($value);
 	}

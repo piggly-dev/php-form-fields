@@ -24,14 +24,14 @@ class UrlSanitize implements SanitizableCallbackInterface
 	 *
 	 * @param mixed $value Value to sanitize.
 	 * @since 0.1.0
-	 * @return string
+	 * @return string|null
 	 */
-	public function sanitize($value): string
+	public function sanitize($value): ?string
 	{
 		if (empty($value)) {
 			return null;
 		}
 
-		return \filter_var($value, \FILTER_SANITIZE_URL);
+		return \filter_var($value, \FILTER_VALIDATE_URL) ? \filter_var($value, \FILTER_SANITIZE_URL) : null;
 	}
 }
