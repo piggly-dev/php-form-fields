@@ -30,6 +30,10 @@ class HtmlWithAllowedTagsSanitize implements SanitizableCallbackInterface
 	 */
 	public function sanitize($value): ?string
 	{
-		return empty($value) ? null : \wp_kses_post($value);
+		if ($value === null) {
+			return null;
+		}
+
+		return \wp_kses_post($value);
 	}
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Pgly\FormFields\Interfaces;
+namespace Pgly\Form\Fields\RenderAttributes;
 
 use Pgly\FormFields\Sanitizers\IntegerSanitize;
 use Pgly\FormFields\Sanitizers\UrlSanitize;
@@ -9,7 +9,7 @@ use Pgly\FormFields\Sanitizers\UrlSanitize;
  * Extended single media render attributes.
  *
  * @package \Pgly\FormFields
- * @subpackage \Pgly\FormFields\Interfaces
+ * @subpackage \Pgly\Form\Fields\RenderAttributes
  * @version 0.1.0
  * @since 0.1.0
  * @category Interfaces

@@ -3,7 +3,7 @@
 namespace Pgly\FormFields\Fields;
 
 use InvalidArgumentException;
-use Pgly\FormFields\Interfaces\BasicRenderAttribute;
+use Pgly\FormFields\Fields\RenderAttributes\BasicRenderAttribute;
 use Pgly\FormFields\Options\HtmlFieldOptions;
 use Pgly\FormFields\Sanitizers\BooleanSanitize;
 
@@ -59,7 +59,7 @@ class ExtendedCheckboxInputField extends AbstractHtmlInputField
 		$id = $op->prefixedName();
 		$vl = $this->value() ? 'true' : 'false';
 		$bs = $this->_cssBase;
-		$fr = $op->onGroup() ? 'pgly-gform' : 'pgly-form';
+		$fr = $op->isOnGroup() ? 'pgly-gform' : 'pgly-form';
 
 		$html  = "<div class=\"{$bs}--column {$bs}-col--{$op->columnSize()}\">";
 		$html .= "<div class=\"{$bs}--field {$fr}--input {$fr}--checkbox\" data-name=\"{$op->name()}\">";

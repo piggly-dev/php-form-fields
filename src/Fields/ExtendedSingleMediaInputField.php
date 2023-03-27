@@ -3,7 +3,7 @@
 namespace Pgly\FormFields\Fields;
 
 use InvalidArgumentException;
-use Pgly\FormFields\Interfaces\ExtendedSingleMediaRenderAttribute;
+use Pgly\FormFields\Fields\RenderAttributes\ExtendedSingleMediaRenderAttribute;
 use Pgly\FormFields\Options\HtmlFieldOptions;
 use Pgly\FormFields\Sanitizers\ArrayOfSanitize;
 use Pgly\FormFields\Sanitizers\BooleanSanitize;
@@ -61,7 +61,7 @@ class ExtendedSingleMediaInputField extends AbstractHtmlInputField
 		$id = $op->prefixedName();
 		$vl = $this->value();
 		$bs = $this->_cssBase;
-		$fr = $op->onGroup() ? 'pgly-gform' : 'pgly-form';
+		$fr = $op->isOnGroup() ? 'pgly-gform' : 'pgly-form';
 
 		$html  = "<div class=\"{$bs}--column {$bs}-col--{$op->columnSize()}\">";
 		$html .= "<div class=\"{$bs}--field {$bs}--media-wrapper {$fr}--input {$fr}--single-media\" data-name=\"{$op->name()}\">";

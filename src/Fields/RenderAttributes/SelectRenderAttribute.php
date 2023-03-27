@@ -1,12 +1,12 @@
 <?php
 
-namespace Pgly\FormFields\Interfaces;
+namespace Pgly\FormFields\Fields\RenderAttributes;
 
 /**
  * Select render attributes.
  *
  * @package \Pgly\FormFields
- * @subpackage \Pgly\FormFields\Interfaces
+ * @subpackage \Pgly\FormFields\Fields\RenderAttributes
  * @version 0.1.0
  * @since 0.1.0
  * @category Interfaces

@@ -3,7 +3,7 @@
 namespace Pgly\FormFields\Fields;
 
 use InvalidArgumentException;
-use Pgly\FormFields\Interfaces\FinderSelectRenderAttribute;
+use Pgly\FormFields\Fields\RenderAttributes\FinderSelectRenderAttribute;
 use Pgly\FormFields\Options\HtmlFieldOptions;
 use Pgly\FormFields\Sanitizers\ArrayOfSanitize;
 use Pgly\FormFields\Sanitizers\IntegerSanitize;
@@ -61,7 +61,7 @@ class FinderSelectInputField extends AbstractHtmlInputField
 		$id = $op->prefixedName();
 		$vl = $this->value();
 		$bs = $this->_cssBase;
-		$fr = $op->onGroup() ? 'pgly-gform' : 'pgly-form';
+		$fr = $op->isOnGroup() ? 'pgly-gform' : 'pgly-form';
 
 		$html  = "<div class=\"{$bs}--column {$bs}-col--{$op->columnSize()}\">";
 		$html .= "<div class=\"{$bs}--field {$bs}--media-wrapper {$fr}--input {$fr}--finder\" data-name=\"{$op->name()}\">";

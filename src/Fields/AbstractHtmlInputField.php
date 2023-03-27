@@ -90,7 +90,15 @@ abstract class AbstractHtmlInputField implements RenderableInterface
 	 */
 	public function value()
 	{
-		return ($this->_value ?? $this->_options->defaultValue() ?? '');
+		if ($this->_value === null) {
+			if ($this->_options->defaultValue() === null) {
+				return '';
+			}
+
+			return $this->_options->defaultValue();
+		}
+
+		return $this->_value;
 	}
 
 	/**

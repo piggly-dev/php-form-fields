@@ -3,7 +3,7 @@
 namespace Pgly\FormFields\Fields;
 
 use InvalidArgumentException;
-use Pgly\FormFields\Interfaces\ExtendedMultipleMediaRenderAttribute;
+use Pgly\FormFields\Fields\RenderAttributes\ExtendedMultipleMediaRenderAttribute;
 use Pgly\FormFields\Options\HtmlFieldOptions;
 use Pgly\FormFields\Sanitizers\ArrayOfSanitize;
 use Pgly\FormFields\Sanitizers\BooleanSanitize;
@@ -59,7 +59,7 @@ class ExtendedMultipleMediaInputField extends AbstractHtmlInputField
 
 		$id = $op->prefixedName();
 		$bs = $this->_cssBase;
-		$fr = $op->onGroup() ? 'pgly-gform' : 'pgly-form';
+		$fr = $op->isOnGroup() ? 'pgly-gform' : 'pgly-form';
 		$vl = implode(',', $this->value());
 		$srcs = implode(',', $render_attrs->srcs());
 

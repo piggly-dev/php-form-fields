@@ -3,7 +3,7 @@
 namespace Pgly\FormFields\Fields;
 
 use InvalidArgumentException;
-use Pgly\FormFields\Interfaces\SelectRenderAttribute;
+use Pgly\FormFields\Fields\RenderAttributes\SelectRenderAttribute;
 use Pgly\FormFields\Options\HtmlFieldOptions;
 use Pgly\FormFields\Sanitizers\HtmlSanitize;
 
@@ -56,7 +56,7 @@ class SelectInputField extends AbstractHtmlInputField
 		$id = $op->prefixedName();
 		$vl = $this->value();
 		$bs = $this->_cssBase;
-		$fr = $op->onGroup() ? 'pgly-gform' : 'pgly-form';
+		$fr = $op->isOnGroup() ? 'pgly-gform' : 'pgly-form';
 
 		$html  = "<div class=\"{$bs}--column {$bs}-col--{$op->columnSize()}\">";
 		$html .= "<div class=\"{$bs}--field {$fr}--input {$fr}--select\" data-name=\"{$op->name()}\">";

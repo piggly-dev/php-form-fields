@@ -28,6 +28,10 @@ class HtmlSanitize implements SanitizableCallbackInterface
 	 */
 	public function sanitize($value): ?string
 	{
-		return empty($value) ? null : \htmlspecialchars($value);
+		if ($value === null) {
+			return null;
+		}
+
+		return \htmlspecialchars($value);
 	}
 }

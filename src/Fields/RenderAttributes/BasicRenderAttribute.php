@@ -1,12 +1,14 @@
 <?php
 
-namespace Pgly\FormFields\Interfaces;
+namespace Pgly\FormFields\Fields\RenderAttributes;
+
+use Pgly\FormFields\Interfaces\RenderAttributesInterface;
 
 /**
  * Basic render attributes.
  *
  * @package \Pgly\FormFields
- * @subpackage \Pgly\FormFields\Interfaces
+ * @subpackage \Pgly\FormFields\Fields\RenderAttributes
  * @version 0.1.0
  * @since 0.1.0
  * @category Interfaces

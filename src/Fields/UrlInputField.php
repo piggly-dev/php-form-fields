@@ -30,6 +30,7 @@ class UrlInputField extends TextInputField
 	public function __construct(HtmlFieldOptions $options = null)
 	{
 		parent::__construct($options);
+		$this->_options->changeType('url');
 		$this->_options->sanitizeWith(new UrlSanitize());
 	}
 }

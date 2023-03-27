@@ -3,7 +3,7 @@
 namespace Pgly\FormFields\Fields;
 
 use InvalidArgumentException;
-use Pgly\FormFields\Interfaces\BasicRenderAttribute;
+use Pgly\FormFields\Fields\RenderAttributes\BasicRenderAttribute;
 use Pgly\FormFields\Options\HtmlFieldOptions;
 use Pgly\FormFields\Sanitizers\HtmlSanitize;
 use Pgly\FormFields\Sanitizers\HtmlWithAllowedTagsSanitize;
@@ -57,7 +57,7 @@ class TextEditorInputField extends AbstractHtmlInputField
 		$id = $op->prefixedName();
 		$vl = $this->value();
 		$bs = $this->_cssBase;
-		$fr = $op->onGroup() ? 'pgly-gform' : 'pgly-form';
+		$fr = $op->isOnGroup() ? 'pgly-gform' : 'pgly-form';
 
 		$html  = "<div class=\"{$bs}--column {$bs}-col--{$op->columnSize()}\">";
 		$html .= "<div class=\"{$bs}--field {$fr}--input {$fr}--texteditor\" data-name=\"{$op->name()}\">";
@@ -69,7 +69,7 @@ class TextEditorInputField extends AbstractHtmlInputField
 		$html .= '<div class="quill-wrapper">';
 		$html .= '<div class="quill-editor">';
 		$html .= $vl;
-		$html .= '</div>';
+		$html .= '</div></div>';
 
 		if ($op->hasAttr('required')) {
 			$html .= "<span class=\"{$bs}--badge {$bs}-is-danger\" style=\"margin-top: 6px; margin-right: 6px\">{$this->_requiredLabel}</span>";
