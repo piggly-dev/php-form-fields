@@ -65,19 +65,16 @@ class SelectInputField extends AbstractHtmlInputField
 			$html .= "<label class=\"{$bs}--label\">{$op->label()}</label>";
 		}
 		$html .= "<select id=\"{$id}\" name=\"{$id}\" {$op->attrs()}>";
+		$html .= "<option class=\"placeholder\" value=\"\">{$op->getAttr('placeholder', 'Selecione uma das opções')}</option>";
 
-		if ($op->hasAttr('placeholder')) {
-			$html .= "<option class=\"placeholder\" value=\"\">{$op->getAttr('placeholder')}</option>";
-		}
-
-		foreach ($render_attrs->options() as $option) {
+		foreach ($render_attrs->options() as $value => $label) {
 			$selected = '';
 
-			if ($option['value'] === $vl) {
+			if ($value === $vl) {
 				$selected = 'selected="selected"';
 			}
 
-			$html .= "<option value=\"{$option['value']}\" {$selected}>{$option['label']}</option>";
+			$html .= "<option value=\"{$value}\" {$selected}>{$label}</option>";
 		}
 
 		$html .= '</select>';

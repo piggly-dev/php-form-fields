@@ -55,7 +55,7 @@ class ExtendedCheckboxInputField extends AbstractHtmlInputField
 		$op = $this->_options;
 		$attrs = $op->attrs();
 
-		$pl = ($attrs['placeholder']??'');
+		$pl = $op->getAttr('placeholder', '');
 		$id = $op->prefixedName();
 		$vl = $this->value() ? 'true' : 'false';
 		$bs = $this->_cssBase;
@@ -69,7 +69,7 @@ class ExtendedCheckboxInputField extends AbstractHtmlInputField
 		}
 
 		$html .= "<div id=\"{$id}\" class=\"{$bs}--checkbox\" data-value=\"{$vl}\" {$attrs}>";
-		$html .= '<div class="{$bs}--icon"></div>';
+		$html .= "<div class=\"{$bs}--icon\"></div>";
 		$html .= "<div class=\"{$bs}--placeholder\">{$pl}</div>";
 		$html .= '</div>';
 

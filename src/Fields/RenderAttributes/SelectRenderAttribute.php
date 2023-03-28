@@ -29,7 +29,7 @@ class SelectRenderAttribute extends BasicRenderAttribute
 	 * Create a new render attribute.
 	 *
 	 * @param mixed $value Value to render.
-	 * @param array $options Options to render. Eg.: [ ['value'=> 1, 'label'=> 'Option 1'], ['value'=> 2, 'label'=> 'Option 2']].
+	 * @param array $options Options to render. Eg.: ['value'=>'label'...].
 	 * @since 0.1.0
 	 * @return void
 	 */

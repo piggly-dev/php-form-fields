@@ -1,6 +1,6 @@
 <?php
 
-namespace Pgly\Form\Fields\RenderAttributes;
+namespace Pgly\FormFields\Fields\RenderAttributes;
 
 use Pgly\FormFields\Sanitizers\IntegerSanitize;
 use Pgly\FormFields\Sanitizers\UrlSanitize;
@@ -39,13 +39,13 @@ class ExtendedSingleMediaRenderAttribute extends BasicRenderAttribute
 	/**
 	 * Create a new render attribute.
 	 *
-	 * @param integer $value Value to render. Eg.: 2.
-	 * @param string $src SRC Url. Eg.: https://example.com/image.jpg.
+	 * @param integer|null $value Value to render. Eg.: 2.
+	 * @param string|null $src SRC Url. Eg.: https://example.com/image.jpg.
 	 * @param array $labels Labels to render. Eg.: ['clean' => 'Clean', 'select' => 'Select'].
 	 * @since 0.1.0
 	 * @return void
 	 */
-	public function __construct(int $value, string $src, array $labels = [])
+	public function __construct(?int $value, ?string $src, array $labels = [])
 	{
 		$this->_value = (new IntegerSanitize())->sanitize($value);
 		$this->_src = (new UrlSanitize())->sanitize($src);
@@ -58,9 +58,9 @@ class ExtendedSingleMediaRenderAttribute extends BasicRenderAttribute
 	 * @since 0.1.0
 	 * @return string
 	 */
-	public function value(): int
+	public function value(): string
 	{
-		return $this->_value;
+		return \strval(($this->_value ?? ''));
 	}
 
 	/**
@@ -71,7 +71,7 @@ class ExtendedSingleMediaRenderAttribute extends BasicRenderAttribute
 	 */
 	public function src(): string
 	{
-		return $this->_src;
+		return ($this->_src ?? '');
 	}
 
 	/**

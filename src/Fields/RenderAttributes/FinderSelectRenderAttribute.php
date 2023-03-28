@@ -46,7 +46,7 @@ class FinderSelectRenderAttribute extends BasicRenderAttribute
 	{
 		$this->_value = $value;
 		$this->_label = $label;
-		$this->_labels = \array_merge(['search' => 'Search', 'unselect' => 'Unselect'], $labels);
+		$this->_labels = \array_merge(['search' => 'Search', 'unselect' => 'Unselect','clean' => 'Clean', 'select' => 'Select'], $labels);
 	}
 
 	/**

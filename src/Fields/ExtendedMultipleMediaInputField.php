@@ -82,10 +82,10 @@ class ExtendedMultipleMediaInputField extends AbstractHtmlInputField
 			$html .= "<p class=\"{$bs}--description\">{$op->description()}</p>";
 		}
 
-		$html .= "<div class=\"{$bs}--action-bar\">
-			<button class=\"{$bs}--button {$bs}-is-compact {$bs}-is-primary {$bs}--select\">{$lbls['select']}</button>
-			<button class=\"{$bs}--button {$bs}-is-compact {$bs}-is-danger {$bs}--clean\">{$lbls['clean']}</button>
-		</div>";
+		$html .= "<div class=\"{$bs}--action-bar\">";
+		$html .= "<button class=\"{$bs}--button {$bs}-is-compact {$bs}-is-primary {$bs}--select\">{$lbls['select']}</button>";
+		$html .= "<button class=\"{$bs}--button {$bs}-is-compact {$bs}-is-danger {$bs}--clean\">{$lbls['clean']}</button>";
+		$html .= '</div>';
 
 		$html .= '</div>';
 		$html .= '</div>';
