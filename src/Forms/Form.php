@@ -44,7 +44,7 @@ class Form
 	 * @since 0.1.0
 	 * @var string
 	 */
-	protected $_cssBase = '{$bs}';
+	protected $_cssBase = 'pgly-wps';
 
 	/**
 	 * Create a new form.
@@ -193,10 +193,11 @@ class Form
 		$name = $this->_options->name();
 		$action = $this->_options->action();
 		$method = $this->_options->method();
-		$attrs = $this->_options->getAttrs();
+		$attrs = $this->_options->attrs();
 		$submit_label = ($this->_options->labels()['submit'] ?? 'Submit');
+		$formWrapper = $this->_options->renderMode();
 
-		$html  = "<form id=\"{$id}\" name=\"{$name}\" action=\"{$action}\" method=\"{$method}\" {$attrs}>";
+		$html  = "<{$formWrapper} id=\"{$id}\" name=\"{$name}\" action=\"{$action}\" method=\"{$method}\" {$attrs}>";
 
 		$html .= "<div class=\"{$bs}--row\"><div class=\"{$bs}--column\">";
 		$html .= "<button class=\"{$bs}--button {$bs}-is-primary pgly-async--behaviour pgly-form--submit\">{$submit_label}<svg class=\"{$bs}--spinner {$bs}-is-white\" viewBox=\"0 0 50 50\"><circle class=\"path\" cx=\"25\" cy=\"25\" r=\"20\" fill=\"none\" stroke-width=\"5\"></circle></svg></button>";
@@ -206,14 +207,13 @@ class Form
 	}
 
 	/**
-	 * Render form fields solving it as rows and columns.
+	 * Organize fields into rows.
 	 *
-	 * @param RenderAttributesInterface[] $render_attrs Attributes to render. Eg.: ['label' => new BasicRenderAttribute()].
 	 * @param int $max_column_size Max column size per row.
 	 * @since 0.1.0
-	 * @return string
+	 * @return array
 	 */
-	public function renderFields(array $render_attrs, int $max_column_size = 12): string
+	public function organizeFields(int $max_column_size = 12): array
 	{
 		$curr_colsize = 0;
 		$rows = [];
@@ -232,6 +232,21 @@ class Form
 			$rows[(count($rows) - 1)][] = $field;
 			$curr_colsize += $colsize;
 		}
+
+		return $rows;
+	}
+
+	/**
+	 * Render form fields solving it as rows and columns.
+	 *
+	 * @param RenderAttributesInterface[] $render_attrs Attributes to render. Eg.: ['label' => new BasicRenderAttribute()].
+	 * @param int $max_column_size Max column size per row.
+	 * @since 0.1.0
+	 * @return string
+	 */
+	public function renderFields(array $render_attrs, int $max_column_size = 12): string
+	{
+		$rows = $this->organizeFields($max_column_size);
 
 		$html = '';
 
@@ -258,11 +273,12 @@ class Form
 	{
 		$bs = $this->_cssBase;
 		$submit_label = ($this->_options->labels()['submit'] ?? 'Submit');
+		$formWrapper = $this->_options->renderMode();
 
-		$html  = '<div class="{$bs}--row"><div class="{$bs}--column">';
+		$html  = "<div class=\"{$bs}--row\"><div class=\"{$bs}--column\">";
 		$html .= "<button class=\"{$bs}--button {$bs}-is-primary pgly-async--behaviour pgly-form--submit\">{$submit_label}<svg class=\"{$bs}--spinner {$bs}-is-white\" viewBox=\"0 0 50 50\"><circle class=\"path\" cx=\"25\" cy=\"25\" r=\"20\" fill=\"none\" stroke-width=\"5\"></circle></svg></button>";
 		$html .= '</div></div>';
-		$html .= '</form>';
+		$html .= "</{$formWrapper}>";
 
 		return $html;
 	}

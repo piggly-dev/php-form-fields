@@ -44,7 +44,7 @@ class GroupForm
 	 * @since 0.1.0
 	 * @var string
 	 */
-	protected $_cssBase = '{$bs}';
+	protected $_cssBase = 'pgly-wps';
 
 	/**
 	 * Create a new field.
@@ -197,14 +197,13 @@ class GroupForm
 	}
 
 	/**
-	 * Render form fields solving it as rows and columns.
+	 * Organize fields into rows.
 	 *
-	 * @param RenderAttributesInterface[] $render_attrs Attributes to render. Eg.: ['label' => new BasicRenderAttribute()].
 	 * @param int $max_column_size Max column size per row.
 	 * @since 0.1.0
-	 * @return string
+	 * @return array
 	 */
-	public function renderFields(array $render_attrs, int $max_column_size = 12): string
+	public function organizeFields(int $max_column_size = 12): array
 	{
 		$curr_colsize = 0;
 		$rows = [];
@@ -223,6 +222,21 @@ class GroupForm
 			$rows[(count($rows) - 1)][] = $field;
 			$curr_colsize += $colsize;
 		}
+
+		return $rows;
+	}
+
+	/**
+	 * Render form fields solving it as rows and columns.
+	 *
+	 * @param RenderAttributesInterface[] $render_attrs Attributes to render. Eg.: ['label' => new BasicRenderAttribute()].
+	 * @param int $max_column_size Max column size per row.
+	 * @since 0.1.0
+	 * @return string
+	 */
+	public function renderFields(array $render_attrs, int $max_column_size = 12): string
+	{
+		$rows = $this->organizeFields($max_column_size);
 
 		$html = '';
 
