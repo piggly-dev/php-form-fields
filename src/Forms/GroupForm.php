@@ -2,9 +2,7 @@
 
 namespace Pgly\FormFields\Forms;
 
-use InvalidArgumentException;
-use Pgly\FormFields\Fields\AbstractHtmlInputField;
-use Pgly\FormFields\Interfaces\GroupRenderAttribute;
+use Pgly\FormFields\Collections\FieldsCollection;
 use Pgly\FormFields\Options\HtmlGroupFormOptions;
 
 /**
@@ -23,20 +21,20 @@ use Pgly\FormFields\Options\HtmlGroupFormOptions;
 class GroupForm
 {
 	/**
+	 * Fields collection.
+	 *
+	 * @var FieldsCollection
+	 * @since 0.1.0
+	 */
+	protected $_fields;
+
+	/**
 	 * Form options.
 	 *
 	 * @since 0.1.0
 	 * @var HtmlGroupFormOptions
 	 */
 	protected $_options;
-
-	/**
-	 * Group form fields.
-	 *
-	 * @since 0.1.0
-	 * @var AbstractHtmlInputField[]
-	 */
-	protected $_fields = [];
 
 	/**
 	 * CSS base class.
@@ -50,106 +48,18 @@ class GroupForm
 	 * Create a new field.
 	 *
 	 * @since 0.1.0
+	 * @param FieldsCollection $fields Form fields.
 	 * @param HtmlGroupFormOptions $options Field options.
-	 * @param AbstractHtmlInputField[] $fields Field fields.
 	 * @return void
 	 */
-	public function __construct(HtmlGroupFormOptions $options = null, array $fields = [])
+	public function __construct(FieldsCollection $fields, HtmlGroupFormOptions $options = null)
 	{
 		if ($options === null) {
 			$options = new HtmlGroupFormOptions();
 		}
 
 		$this->_options = $options;
-		$this->_fields = \array_map(function (AbstractHtmlInputField $field) {
-			if ($field->options()->onGroup()) {
-				return $field;
-			}
-
-			$_field = clone $field;
-			$_field->options()->onGroup(true);
-			return $_field;
-		}, $fields);
-	}
-
-	/**
-	 * Add a new field.
-	 *
-	 * @since 0.1.0
-	 * @param AbstractHtmlInputField $field Field to add.
-	 * @return self
-	 */
-	public function addField(AbstractHtmlInputField $field)
-	{
-		$this->_fields[] = $field;
-		return $this;
-	}
-
-	/**
-	 * Get field by name
-	 *
-	 * @param string $name Field name.
-	 * @since 0.1.0
-	 * @return AbstractHtmlInputField|null
-	 */
-	public function getField(string $name)
-	{
-		foreach ($this->_fields as $field) {
-			if ($field->options()->name() === $name) {
-				return $field;
-			}
-		}
-
-		return null;
-	}
-
-	/**
-	 * Render a field by name.
-	 *
-	 * @param string $name Field name.
-	 * @param RenderAttributesInterface $render_attrs Attributes to render.
-	 * @since 0.1.0
-	 * @return string
-	 */
-	public function renderField(string $name, $render_attrs): string
-	{
-		$field = $this->getField($name);
-
-		if ($field === null) {
-			return '';
-		}
-
-		return $field->render($render_attrs);
-	}
-
-	/**
-	 * Remove a field by name.
-	 *
-	 * @param string $name Field name.
-	 * @since 0.1.0
-	 * @return self
-	 */
-	public function removeField(string $name)
-	{
-		foreach ($this->_fields as $key => $field) {
-			if ($field->options()->name() === $name) {
-				unset($this->_fields[$key]);
-				return $this;
-			}
-		}
-
-		return $this;
-	}
-
-	/**
-	 * Get all fields.
-	 *
-	 * @since 0.1.0
-	 * @return AbstractHtmlInputField[]
-	 */
-	public function getFields()
-	{
-		return $this->_fields;
+		$this->_fields = $fields->toGroup();
 	}
 
 	/**
@@ -177,6 +87,28 @@ class GroupForm
 	}
 
 	/**
+	 * Get CSS base class.
+	 *
+	 * @since 0.1.0
+	 * @return string
+	 */
+	public function cssBase(): string
+	{
+		return $this->_cssBase;
+	}
+
+	/**
+	 * Get fields collection.
+	 *
+	 * @since 0.1.0
+	 * @return FieldsCollection
+	 */
+	public function fields(): FieldsCollection
+	{
+		return $this->_fields;
+	}
+
+	/**
 	 * Render form header.
 	 *
 	 * @since 0.1.0
@@ -193,63 +125,6 @@ class GroupForm
 		$html .= "<span class=\"{$bs}--message\"></span>";
 		$html .= "<svg class=\"{$bs}--spinner {$bs}-is-primary\" viewBox=\"0 0 50 50\"><circle class=\"path\" cx=\"25\" cy=\"25\" r=\"20\" fill=\"none\" stroke-width=\"5\"></circle></svg>";
 		$html .= '<div class="container">';
-		return $html;
-	}
-
-	/**
-	 * Organize fields into rows.
-	 *
-	 * @param int $max_column_size Max column size per row.
-	 * @since 0.1.0
-	 * @return array
-	 */
-	public function organizeFields(int $max_column_size = 12): array
-	{
-		$curr_colsize = 0;
-		$rows = [];
-
-		foreach ($this->_fields as $field) {
-			$colsize = $field->options()->columnSize();
-
-			if (($curr_colsize + $colsize) > $max_column_size) {
-				$curr_colsize = 0;
-			}
-
-			if ($curr_colsize === 0) {
-				$rows[] = [];
-			}
-
-			$rows[(count($rows) - 1)][] = $field;
-			$curr_colsize += $colsize;
-		}
-
-		return $rows;
-	}
-
-	/**
-	 * Render form fields solving it as rows and columns.
-	 *
-	 * @param RenderAttributesInterface[] $render_attrs Attributes to render. Eg.: ['label' => new BasicRenderAttribute()].
-	 * @param int $max_column_size Max column size per row.
-	 * @since 0.1.0
-	 * @return string
-	 */
-	public function renderFields(array $render_attrs, int $max_column_size = 12): string
-	{
-		$rows = $this->organizeFields($max_column_size);
-
-		$html = '';
-
-		foreach ($rows as $row) {
-			$html .= "<div class=\"{$this->_cssBase}--row\">";
-
-			foreach ($row as $field) {
-				$html .= $field->render($render_attrs[$field->options()->name()]);
-			}
-
-			$html .= '</div>';
-		}
-
 		return $html;
 	}
 
