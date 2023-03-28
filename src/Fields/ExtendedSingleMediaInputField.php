@@ -73,7 +73,7 @@ class ExtendedSingleMediaInputField extends AbstractHtmlInputField
 		$html .= "<div id=\"{$id}\" class=\"container\" {$attrs}>";
 		$html .= "<img data-value=\"{$vl}\" data-src=\"{$render_attrs->src()}\" />";
 		$html .= "<span class=\"{$bs}--placeholder\">{$pl}</span>";
-		$html .= "</div>";
+		$html .= '</div>';
 
 		if ($op->hasAttr('required')) {
 			$html .= "<span class=\"{$bs}--badge {$bs}-is-danger\" style=\"margin-top: 6px; margin-right: 6px\">{$this->_requiredLabel}</span>";
@@ -88,7 +88,7 @@ class ExtendedSingleMediaInputField extends AbstractHtmlInputField
 		$html .= "<div class=\"{$bs}--action-bar\">";
 		$html .= "<button class=\"{$bs}--button {$bs}-is-compact {$bs}-is-primary {$bs}--select\">{$lbls['select']}</button>";
 		$html .= "<button class=\"{$bs}--button {$bs}-is-compact {$bs}-is-danger {$bs}--clean\">{$lbls['clean']}</button>";
-		$html .= "</div>";
+		$html .= '</div>';
 
 		$html .= '</div>';
 		$html .= '</div>';
